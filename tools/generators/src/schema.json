@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "Generator",
+  "title": "Angular library and component generator",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Angular library name",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path to the library if (empty = name)",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": {
+        "message": "Where would you like to create the library?",
+        "type": "input"
+      }
+    },
+    "createSingleComponent": {
+      "type": "boolean",
+      "description": "Create a single component",
+      "default": false
+    },
+    "createBaseComponent": {
+      "type": "boolean",
+      "description": "Create a base component",
+      "default": true
+    },
+    "createDataAccess": {
+      "type": "boolean",
+      "description": "Create a data-access lib",
+      "default": true
+    }
+  },
+  "required": ["name"]
+}
