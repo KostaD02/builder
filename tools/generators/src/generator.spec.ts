@@ -24,6 +24,7 @@ describe('generatorGenerator', () => {
       createBaseComponent: true,
       createSingleComponent: false,
       createDataAccess: false,
+      skipShell: false,
     });
 
     expect(libraryGenerator).toHaveBeenCalledWith(
@@ -45,6 +46,7 @@ describe('generatorGenerator', () => {
       createBaseComponent: true,
       createSingleComponent: true,
       createDataAccess: true,
+      skipShell: false,
     });
 
     // Check that libraryGenerator was called once for base component
@@ -66,6 +68,7 @@ describe('generatorGenerator', () => {
       createBaseComponent: false,
       createSingleComponent: false,
       createDataAccess: true,
+      skipShell: false,
     });
 
     expect(libraryGenerator).toHaveBeenCalledWith(
@@ -85,6 +88,7 @@ describe('generatorGenerator', () => {
       createBaseComponent: false,
       createSingleComponent: false,
       createDataAccess: false,
+      skipShell: false,
     });
 
     expect(libraryGenerator).toHaveBeenCalledWith(
@@ -109,6 +113,7 @@ describe('generatorGenerator', () => {
       createBaseComponent: false,
       createSingleComponent: false,
       createDataAccess: false,
+      skipShell: false,
     });
 
     expect(tree.write).toHaveBeenCalledWith(
@@ -128,6 +133,7 @@ describe('generatorGenerator', () => {
       createBaseComponent: false,
       createSingleComponent: false,
       createDataAccess: false,
+      skipShell: false,
     });
 
     expect(tree.write).toHaveBeenCalledWith(
@@ -147,6 +153,7 @@ describe('generatorGenerator', () => {
       createBaseComponent: true,
       createSingleComponent: false,
       createDataAccess: false,
+      skipShell: false,
     });
 
     expect(libraryGenerator).toHaveBeenCalledWith(
@@ -175,6 +182,7 @@ describe('generatorGenerator', () => {
       createBaseComponent: false,
       createSingleComponent: false,
       createDataAccess: true,
+      skipShell: false,
     });
 
     // Should not call libraryGenerator for data-access since it exists

@@ -71,7 +71,7 @@ export async function generatorGenerator(
     }
   }
 
-  if (!tree.exists(shellDir)) {
+  if (!tree.exists(shellDir) && !options.skipShell) {
     const libName = `${options.name}/shell`;
     await libraryGenerator(tree, {
       name: libName,

@@ -39,6 +39,11 @@
       "type": "boolean",
       "description": "Create a data-access lib",
       "default": true
+    },
+    "skipShell": {
+      "type": "boolean",
+      "description": "Skip shell creation",
+      "default": false
     }
   },
   "required": ["name"]

@@ -4,4 +4,5 @@ export interface GeneratorGeneratorSchema {
   createBaseComponent: boolean;
   createDataAccess: boolean;
   createSingleComponent: boolean;
+  skipShell: boolean;
 }
