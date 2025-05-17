@@ -5,7 +5,7 @@ import { GeneratorGeneratorSchema } from './schema';
 
 export async function generatorGenerator(
   tree: Tree,
-  options: GeneratorGeneratorSchema
+  options: GeneratorGeneratorSchema,
 ) {
   const projectRoot = `libs/${options.path || options.name}`;
   const featuresDir = joinPathFragments(projectRoot, 'features');
@@ -14,7 +14,7 @@ export async function generatorGenerator(
   const baseComponentDir = joinPathFragments(
     options.createSingleComponent
       ? projectRoot
-      : `${featuresDir}/${options.name}`
+      : `${featuresDir}/${options.name}`,
   );
 
   const config: Schema = {
@@ -23,7 +23,7 @@ export async function generatorGenerator(
     standalone: true,
     commonModule: false,
     prefix: 'builder',
-    style: 'sass',
+    style: 'scss',
     changeDetection: 'OnPush',
     directory: baseComponentDir,
     importPath: `@builder/${options.name}`,
@@ -62,7 +62,7 @@ export async function generatorGenerator(
 
       const dataAccessComponentDir = joinPathFragments(
         srcDataAccessPath,
-        `lib/${options.name}`
+        `lib/${options.name}`,
       );
 
       if (tree.exists(dataAccessComponentDir)) {
@@ -92,7 +92,7 @@ export async function generatorGenerator(
     const routesPath = joinPathFragments(srcShellPath, 'lib/lib.routes.ts');
     const routesTestPath = joinPathFragments(
       srcShellPath,
-      'lib/lib.routes.spec.ts'
+      'lib/lib.routes.spec.ts',
     );
     const indexFilePath = joinPathFragments(srcShellPath, 'index.ts');
     const routesName = `${options.name
@@ -104,7 +104,7 @@ export async function generatorGenerator(
       `import { Route } from '@angular/router';
 
 export const ${routesName}: Route[] = [];
-`
+`,
     );
     tree.write(
       routesTestPath,
@@ -129,13 +129,13 @@ describe('${options.name}Routes', () => {
     expect(rootRoute).toBeDefined();
   });
 });
-`
+`,
     );
     tree.write(indexFilePath, `export * from './lib/lib.routes';`);
 
     const shellComponentDir = joinPathFragments(
       srcShellPath,
-      `lib/${options.name}`
+      `lib/${options.name}`,
     );
 
     if (tree.exists(shellComponentDir)) {

@@ -82,7 +82,7 @@
       "unitTestRunner": "jest"
     },
     "@nx/angular:component": {
-      "style": "sass"
+      "style": "scss"
     }
   },
   "defaultProject": "builder"

@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
   selector: 'builder-shell',
   imports: [RouterModule],
   templateUrl: './shell.component.html',
-  styleUrl: './shell.component.sass',
+  styleUrl: './shell.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShellComponent {}

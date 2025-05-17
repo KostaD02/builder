@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'builder-home',
   imports: [MatButtonModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.sass',
+  styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {}

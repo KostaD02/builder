@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'builder-not-found',
   imports: [CommonModule],
   templateUrl: './not-found.component.html',
-  styleUrl: './not-found.component.sass',
+  styleUrl: './not-found.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotFoundComponent {}
