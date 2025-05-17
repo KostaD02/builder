@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'builder-home',
-  imports: [CommonModule],
+  imports: [MatButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
