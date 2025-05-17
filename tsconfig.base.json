@@ -19,7 +19,10 @@
       "@builder/home": ["libs/home/features/home/src/index.ts"],
       "@builder/home/data-access": ["libs/home/data-access/src/index.ts"],
       "@builder/home/shell": ["libs/home/features/shell/src/index.ts"],
+      "@builder/infra/types": ["libs/infra/types/src/index.ts"],
+      "@builder/infra/consts": ["libs/infra/consts/src/index.ts"],
       "@builder/infra/services": ["libs/infra/services/src/index.ts"],
+      "@builder/infra/directives": ["libs/infra/directives/src/index.ts"],
       "@builder/not-found": ["libs/not-found/features/not-found/src/index.ts"],
       "@builder/not-found/shell": [
         "libs/not-found/features/shell/src/index.ts"

@@ -2,13 +2,22 @@
   "name": "@builder/source",
   "version": "0.0.1",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kostad02/builder/issues"
+  },
+  "author": {
+    "name": "Konstantine Datunishvili",
+    "email": "konstantine@datunishvili.ge",
+    "url": "https://konstantinedatunishvili.com"
+  },
   "scripts": {
     "prepare": "husky",
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
+    "test:ci": "nx test --disableRemoteCache",
     "lint": "nx lint",
-    "pre-commit": "npm run test && npm run lint",
+    "pre-commit": "npm run test:ci && npm run lint",
     "commitlint": "commitlint --edit"
   },
   "private": true,
@@ -65,7 +74,7 @@
     "jest-preset-angular": "~14.4.0",
     "jsonc-eslint-parser": "^2.1.0",
     "nx": "21.0.3",
-    "prettier": "^2.6.2",
+    "prettier": "^3.2.4",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
