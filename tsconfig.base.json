@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@builder/generators": ["tools/generators/src/index.ts"],
+      "@builder/home": ["libs/home/features/home/src/index.ts"],
+      "@builder/home/data-access": ["libs/home/data-access/src/index.ts"],
+      "@builder/home/shell": ["libs/home/features/shell/src/index.ts"],
+      "@builder/not-found": ["libs/not-found/features/not-found/src/index.ts"],
+      "@builder/not-found/shell": [
+        "libs/not-found/features/shell/src/index.ts"
+      ],
+      "@builder/shell": ["libs/shell/features/shell/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
