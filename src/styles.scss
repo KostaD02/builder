@@ -1,5 +1,28 @@
-body {
+@use '@angular/material' as mat;
+
+:root {
+  --primary-color: var(--mat-sys-primary, #005cbb);
+  --primary-container-color: var(--mat-sys-primary-container, #d7e3ff);
+  --divider-color: #37373742;
+}
+
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  // TODO: dark mode support?
+  @include mat.theme(
+    (
+      color: mat.$azure-palette,
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }

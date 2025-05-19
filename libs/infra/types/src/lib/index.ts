@@ -1,1 +1,1 @@
-export type example = string;
+export * from './view';

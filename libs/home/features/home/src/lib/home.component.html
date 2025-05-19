@@ -1,1 +1,159 @@
-<p>Home works!</p>
+<mat-sidenav-container>
+  @let isDesktopView = isDesktop();
+  @let isMobileView = isDesktopView === false;
+  <mat-sidenav
+    #drawer
+    fixedInViewport
+    [attr.role]="isDesktopView ? 'navigation' : 'dialog'"
+    [mode]="isDesktopView ? 'side' : 'over'"
+    [opened]="isDesktopView"
+  >
+    <mat-toolbar class="sidenav-header">
+      <span>Action</span>
+      @if (isMobileView) {
+        <button mat-icon-button (click)="drawer.close()" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-toolbar>
+    @if (isMobileView) {
+      <div class="sidenav-subheader">
+        <ng-container *ngTemplateOutlet="templateSidenavActions"></ng-container>
+      </div>
+    }
+    @switch (selectedSidenavAction().action) {
+      @case (LayoutActions.ADD_ELEMENT) {
+        <ng-container *ngTemplateOutlet="templateAddElement"></ng-container>
+      }
+      @case (LayoutActions.CREATE_PAGE) {
+        <ng-container *ngTemplateOutlet="templateCreatePage"></ng-container>
+      }
+      @case (LayoutActions.EDIT_PAGE) {
+        <ng-container *ngTemplateOutlet="templateEditPage"></ng-container>
+      }
+      @default {
+        <p>Incorrect action</p>
+      }
+    }
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <aside>
+        @if (!isDesktop()) {
+          <button
+            mat-icon-button
+            type="button"
+            aria-label="Toggle sidenav"
+            (click)="drawer.toggle()"
+          >
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+        } @else {
+          <ng-container *ngTemplateOutlet="templateViewActions"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="templateSidenavActions"
+          ></ng-container>
+        }
+      </aside>
+      <aside>
+        <ng-container *ngTemplateOutlet="templateControlActions"></ng-container>
+        @if (isDesktopView) {
+          <ng-container *ngTemplateOutlet="templateGithubCta"></ng-container>
+        }
+      </aside>
+    </mat-toolbar>
+    <section class="content"></section>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #templateSidenavActions>
+  <ul>
+    @for (item of sidenavActions; track $index) {
+      <li>
+        <button
+          mat-icon-button
+          [matTooltip]="item.text"
+          [class.selected]="selectedSidenavAction().action === item.action"
+          (click)="selectedSidenavAction.set(item)"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+        </button>
+      </li>
+    }
+  </ul>
+</ng-template>
+
+<ng-template #templateControlActions>
+  <ul>
+    @for (item of controlActions; track $index) {
+      <li>
+        <button
+          mat-icon-button
+          [matTooltip]="item.text"
+          (click)="handleControlAction(item)"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+        </button>
+      </li>
+    }
+  </ul>
+</ng-template>
+
+<ng-template #templateViewActions>
+  <ul>
+    <li>
+      <button
+        mat-icon-button
+        matTooltip="Desktop view"
+        [class.selected]="selectedView() === BuilderView.Desktop"
+        (click)="selectedView.set(BuilderView.Desktop)"
+      >
+        <mat-icon>monitor</mat-icon>
+      </button>
+    </li>
+    <li>
+      <button
+        mat-icon-button
+        matTooltip="Mobile view"
+        [class.selected]="selectedView() === BuilderView.Mobile"
+        (click)="selectedView.set(BuilderView.Mobile)"
+      >
+        <mat-icon>smartphone</mat-icon>
+      </button>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #templateGithubCta>
+  <a mat-button href="https://github.com/KostaD02/builder" target="_blank">
+    <mat-icon svgIcon="github" class="github-logo"></mat-icon>
+    Github
+  </a>
+</ng-template>
+
+<ng-template #templateAddElement>
+  <!-- TODO: update to component -->
+  <mat-list>
+    <mat-list-item>test 1</mat-list-item>
+    <mat-list-item>test 2</mat-list-item>
+  </mat-list>
+</ng-template>
+
+<ng-template #templateCreatePage>
+  <!-- TODO: update to component -->
+  <mat-list>
+    <mat-list-item>test 1</mat-list-item>
+    <mat-list-item>test 2</mat-list-item>
+    <mat-list-item>test 3</mat-list-item>
+  </mat-list>
+</ng-template>
+
+<ng-template #templateEditPage>
+  <!-- TODO: update to component -->
+  <mat-list>
+    <mat-list-item>test 1</mat-list-item>
+    <mat-list-item>test 2</mat-list-item>
+    <mat-list-item>test 3</mat-list-item>
+    <mat-list-item>test 4</mat-list-item>
+  </mat-list>
+</ng-template>

@@ -1,1 +1,67 @@
+mat-sidenav-container {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
 
+  .selected {
+    background-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
+  }
+
+  mat-toolbar {
+    background-color: var(--primary-container-color);
+    border-bottom: 1px solid var(--divider-color);
+  }
+
+  .mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    justify-content: space-between;
+
+    * {
+      color: var(--primary-color);
+    }
+
+    .github-logo {
+      width: 24px;
+      height: 24px;
+    }
+
+    aside,
+    ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 8px;
+    }
+
+    aside {
+      gap: 36px;
+    }
+  }
+
+  mat-sidenav {
+    max-width: 250px;
+    border-radius: 0;
+    border-right: 1px solid var(--divider-color);
+
+    .sidenav-header {
+      justify-content: space-between;
+      color: var(--primary-color);
+    }
+
+    .sidenav-subheader {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--divider-color);
+
+      ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        list-style: none;
+        gap: 8px;
+      }
+    }
+  }
+}
