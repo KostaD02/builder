@@ -21,19 +21,26 @@
         <ng-container *ngTemplateOutlet="templateSidenavActions"></ng-container>
       </div>
     }
-    @switch (selectedSidenavAction().action) {
-      @case (LayoutActions.ADD_ELEMENT) {
-        <ng-container *ngTemplateOutlet="templateAddElement"></ng-container>
+    <div class="sidenav-actions">
+      @switch (selectedSidenavAction().action) {
+        @case (LayoutActions.ADD_ELEMENT) {
+          <ng-container *ngTemplateOutlet="templateAddElement"></ng-container>
+        }
+        @case (LayoutActions.CREATE_PAGE) {
+          <builder-create-page />
+        }
+        @case (LayoutActions.EDIT_PAGE) {
+          <ng-container *ngTemplateOutlet="templateEditPage"></ng-container>
+        }
+        @default {
+          <p>Incorrect action</p>
+        }
       }
-      @case (LayoutActions.CREATE_PAGE) {
-        <ng-container *ngTemplateOutlet="templateCreatePage"></ng-container>
-      }
-      @case (LayoutActions.EDIT_PAGE) {
-        <ng-container *ngTemplateOutlet="templateEditPage"></ng-container>
-      }
-      @default {
-        <p>Incorrect action</p>
-      }
+    </div>
+    @if (isMobileView) {
+      <div class="github-cta">
+        <ng-container *ngTemplateOutlet="templateGithubCta"></ng-container>
+      </div>
     }
   </mat-sidenav>
   <mat-sidenav-content>

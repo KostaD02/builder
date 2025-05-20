@@ -26,8 +26,12 @@
         ],
         "styles": [
           "@angular/material/prebuilt-themes/azure-blue.css",
-          "./src/styles.scss"
+          "./src/styles.scss",
+          "./libs/infra/styles/src/index.scss"
         ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/infra/styles/src/lib"]
+        },
         "scripts": []
       },
       "configurations": {

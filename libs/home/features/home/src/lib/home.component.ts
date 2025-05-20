@@ -15,6 +15,7 @@ import { LayoutService } from '@builder/infra/services';
 import { BuilderView } from '@builder/infra/types';
 import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
 import { CommonModule } from '@angular/common';
+import { CreatePageComponent } from '@builder/create-page';
 
 @Component({
   selector: 'builder-home',
@@ -26,6 +27,7 @@ import { CommonModule } from '@angular/common';
     MatSidenavModule,
     MatTooltipModule,
     MatToolbarModule,
+    CreatePageComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -40,7 +42,7 @@ export class HomeComponent {
   readonly controlActions = CONTROL_ACTIONS;
   readonly isDesktop = this.layoutService.isDesktop;
 
-  readonly selectedSidenavAction = signal<LayoutItem>(this.sidenavActions[0]);
+  readonly selectedSidenavAction = signal<LayoutItem>(this.sidenavActions[1]);
 
   readonly selectedView = signal<BuilderView>(
     this.isDesktop() ? BuilderView.Desktop : BuilderView.Mobile,

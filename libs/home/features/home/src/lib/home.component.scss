@@ -1,3 +1,5 @@
+@use 'breakpoints' as *;
+
 mat-sidenav-container {
   width: 100%;
   min-height: 100vh;
@@ -62,6 +64,21 @@ mat-sidenav-container {
         list-style: none;
         gap: 8px;
       }
+    }
+
+    .sidenav-actions {
+      height: 100%;
+      max-height: calc(100% - 64px);
+      overflow-y: auto;
+      background-color: red;
+
+      @include media-breakpoint-down(lg) {
+        max-height: calc(100% - 165px);
+      }
+    }
+
+    .github-cta {
+      margin-top: 5px;
     }
   }
 }
