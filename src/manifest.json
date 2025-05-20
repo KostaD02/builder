@@ -1,0 +1,32 @@
+{
+  "theme_color": "#d7e3ff",
+  "background_color": "#faf9fd",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "name": "Builder",
+  "short_name": "Builder",
+  "description": "Webiste builder",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
