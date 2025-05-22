@@ -1,9 +1,9 @@
 export default {
-  displayName: 'create-page',
+  displayName: 'metadata',
   preset: '../../../../../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory:
-    '../../../../../../../../coverage/libs/home/features/home/src/lib/ui/create-page',
+    '../../../../../../../../coverage/libs/home/features/home/src/lib/ui/metadata',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

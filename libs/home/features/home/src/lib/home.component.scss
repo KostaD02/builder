@@ -70,7 +70,6 @@ mat-sidenav-container {
       height: 100%;
       max-height: calc(100% - 64px);
       overflow-y: auto;
-      background-color: red;
 
       @include media-breakpoint-down(lg) {
         max-height: calc(100% - 165px);

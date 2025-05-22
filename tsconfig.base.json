@@ -18,14 +18,8 @@
       "@builder/component-picker": [
         "libs/home/features/home/src/lib/ui/component-picker/src/index.ts"
       ],
-      "@builder/create-page": [
-        "libs/home/features/home/src/lib/ui/create-page/src/index.ts"
-      ],
       "@builder/download": [
         "libs/home/features/home/src/lib/ui/download/src/index.ts"
-      ],
-      "@builder/edit-page": [
-        "libs/home/features/home/src/lib/ui/edit-page/src/index.ts"
       ],
       "@builder/generators": ["tools/generators/src/index.ts"],
       "@builder/home": ["libs/home/features/home/src/index.ts"],
@@ -33,8 +27,12 @@
       "@builder/home/shell": ["libs/home/features/shell/src/index.ts"],
       "@builder/infra/consts": ["libs/infra/consts/src/index.ts"],
       "@builder/infra/directives": ["libs/infra/directives/src/index.ts"],
+      "@builder/infra/pipes": ["libs/infra/pipes/src/index.ts"],
       "@builder/infra/services": ["libs/infra/services/src/index.ts"],
       "@builder/infra/types": ["libs/infra/types/src/index.ts"],
+      "@builder/metadata": [
+        "libs/home/features/home/src/lib/ui/metadata/src/index.ts"
+      ],
       "@builder/not-found": ["libs/not-found/features/not-found/src/index.ts"],
       "@builder/not-found/shell": [
         "libs/not-found/features/shell/src/index.ts"

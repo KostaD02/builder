@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CreatePageComponent } from './create-page.component';
+import { MetadataComponent } from './metadata.component';
 
-describe('CreatePageComponent', () => {
-  let component: CreatePageComponent;
-  let fixture: ComponentFixture<CreatePageComponent>;
+describe('MetadataComponent', () => {
+  let component: MetadataComponent;
+  let fixture: ComponentFixture<MetadataComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreatePageComponent],
+      imports: [MetadataComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CreatePageComponent);
+    fixture = TestBed.createComponent(MetadataComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
