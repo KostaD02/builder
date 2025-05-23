@@ -14,11 +14,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LayoutActions, LayoutItem } from '@builder/home/data-access';
 import { BuilderService, LayoutService } from '@builder/infra/services';
-import { BuilderView, Metadata } from '@builder/infra/types';
+import { BuilderView, ComponentToken, Metadata } from '@builder/infra/types';
 import { CommonModule } from '@angular/common';
 import { MetadataComponent } from '@builder/metadata';
-import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
 import { ComponentPickerComponent } from '@builder/component-picker';
+import { COMPONENTS } from '@builder/infra/consts';
+import { BypassSanitizePipe } from '@builder/infra/pipes';
+import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
 
 @Component({
   selector: 'builder-home',
@@ -33,6 +35,7 @@ import { ComponentPickerComponent } from '@builder/component-picker';
     MatToolbarModule,
     MetadataComponent,
     ComponentPickerComponent,
+    BypassSanitizePipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -53,6 +56,13 @@ export class HomeComponent {
   readonly selectedPageIndex = signal<number>(0);
   readonly selectedView = signal<BuilderView>(
     this.isDesktop() ? BuilderView.Desktop : BuilderView.Mobile,
+  );
+
+  // TODO: remove
+  readonly srcDoc = computed(() =>
+    this.pages()
+      ? this.builderService.buildSrcDoc(this.selectedPageIndex())
+      : '',
   );
 
   handleControlAction(item: LayoutItem): void {
@@ -85,5 +95,12 @@ export class HomeComponent {
     this.selectedPageIndex.set(0);
     this.selectedSidenavAction.set(this.sidenavActions[1]);
     this.builderService.removePage(selectedIndex);
+  }
+
+  onNewElementAddition(token: ComponentToken): void {
+    this.builderService.addNewElementInPage(
+      this.selectedPageIndex(),
+      COMPONENTS[token.type],
+    );
   }
 }

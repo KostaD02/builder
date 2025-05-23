@@ -27,7 +27,9 @@
       @let selectedAction = selectedSidenavAction().action;
       @switch (selectedAction) {
         @case (LayoutActions.ADD_ELEMENT) {
-          <builder-component-picker />
+          <builder-component-picker
+            (selectedToken)="onNewElementAddition($event)"
+          />
         }
         @case (LayoutActions.CREATE_PAGE) {
           <builder-metadata
@@ -90,7 +92,12 @@
         @for (item of pageItems; track item.id) {
           <mat-tab [label]="item.metadata.slug">
             <section class="content-tab">
-              {{ item.metadata.title }}
+              <!-- TODO: for now preview but refactor with components and angular to have ability for update -->
+              <iframe
+                [srcdoc]="srcDoc() | bypassSanitize"
+                frameborder="0"
+              ></iframe>
+              <!-- TODO: use iframe for preview -->
             </section>
           </mat-tab>
         }

@@ -1,4 +1,4 @@
-export enum CompomentType {
+export enum ComponentType {
   Text = 'text',
   Image = 'image',
   Link = 'link',

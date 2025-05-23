@@ -1,5 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Metadata, Page, Pages } from '@builder/infra/types';
+import {
+  Metadata,
+  Page,
+  PageContent,
+  PageItem,
+  Pages,
+} from '@builder/infra/types';
 import { STORAGE_KEYS } from '@builder/infra/consts';
 import { LocalStorageService } from '../storage/storage.service';
 
@@ -46,6 +52,26 @@ export class BuilderService {
     this.saveCurrentStateInStorage();
   }
 
+  addNewElementInPage(
+    pageIndex: number,
+    content: Omit<PageContent, 'id'>,
+  ): void {
+    this.pages.update((pages) => {
+      const page = pages[pageIndex];
+      // TODO: implement id generation
+      page.children.push({
+        id: `${pageIndex}-${page.children.length}`,
+        content: {
+          ...content,
+          id: 0,
+        },
+        children: [],
+      });
+      return pages;
+    });
+    this.saveCurrentStateInStorage();
+  }
+
   updatePage(index: number, metadata: Metadata): void {
     this.pages.update((pages) => {
       pages[index].metadata = metadata;
@@ -71,5 +97,59 @@ export class BuilderService {
     // TODO: show pop up if user is sure
     this.pages.set([this.defaultPage]);
     this.saveCurrentStateInStorage();
+  }
+
+  buildSrcDoc(activeIndex: number): string {
+    const page = this.pages()[activeIndex];
+    const title = page.metadata.title;
+    const body = this.processPageItems(page.children);
+    // TODO: handle style and script
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title}</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    ${body}
+    <div style="display: none" />
+  </main>
+</body>
+</html>
+`;
+  }
+
+  private processPageItems(items: PageItem[]): string {
+    let result = '';
+
+    for (const item of items) {
+      const { tagName, content, class: className, style } = item.content;
+      const children = this.processPageItems(item.children);
+      const styleString = style
+        ? Object.entries(style)
+            .map(([key, value]) => `${key}: ${value};`)
+            .join(' ')
+        : '';
+
+      result += `<${tagName} class="${className}" style="${styleString}">${content}${children}</${tagName}>`;
+
+      if (item?.children && item.children.length > 0) {
+        result += this.processPageItems(item.children);
+      }
+    }
+
+    return result;
   }
 }

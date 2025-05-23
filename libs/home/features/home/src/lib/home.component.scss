@@ -98,6 +98,12 @@ mat-sidenav-container {
         @include media-breakpoint-down(lg) {
           --max-size: 110px;
         }
+
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
       }
     }
   }

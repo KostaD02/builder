@@ -1,23 +1,23 @@
 import { ComponentGeneralStyle } from './component';
 import { Metadata } from './metadata';
 
-export type PageId = number;
-
 export interface Page {
-  id: PageId;
+  id: number;
   metadata: Metadata;
   children: PageItem[];
 }
 
 export interface PageItem {
-  id: PageId;
+  id: `${number}-${number}`;
   content: PageContent;
   children: PageItem[];
 }
 
 export interface PageContent {
-  id: PageId;
-  html?: string;
+  id: number;
+  tagName: string;
+  content: string;
+  class?: string;
   style?: ComponentGeneralStyle;
   javascript?: string;
 }
