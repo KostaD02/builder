@@ -27,3 +27,22 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   background-color: var(--mat-sys-background);
 }
+
+button {
+  &.warn {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: #fff,
+        filled-container-color: #e1b035,
+      )
+    );
+  }
+  &.danger {
+    @include mat.button-overrides(
+      (
+        filled-label-text-color: #fff,
+        filled-container-color: #ba1a1a,
+      )
+    );
+  }
+}

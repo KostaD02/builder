@@ -1,6 +1,8 @@
 <mat-sidenav-container>
   @let isDesktopView = isDesktop();
   @let isMobileView = isDesktopView === false;
+  @let pageItems = pages();
+  @let selectedViewIndex = selectedPageIndex();
   <mat-sidenav
     #drawer
     fixedInViewport
@@ -21,19 +23,37 @@
         <ng-container *ngTemplateOutlet="templateSidenavActions"></ng-container>
       </div>
     }
-    @switch (selectedSidenavAction().action) {
-      @case (LayoutActions.ADD_ELEMENT) {
-        <ng-container *ngTemplateOutlet="templateAddElement"></ng-container>
+    <div class="sidenav-actions">
+      @let selectedAction = selectedSidenavAction().action;
+      @switch (selectedAction) {
+        @case (LayoutActions.ADD_ELEMENT) {
+          <ng-container *ngTemplateOutlet="templateAddElement"></ng-container>
+        }
+        @case (LayoutActions.CREATE_PAGE) {
+          <builder-metadata
+            [isEdit]="false"
+            [isIndexPage]="pageItems.length === 0"
+            (result)="onCreatePage($event)"
+          />
+        }
+        @case (LayoutActions.EDIT_PAGE) {
+          <builder-metadata
+            [isEdit]="true"
+            [data]="pageItems[selectedViewIndex].metadata"
+            [isIndexPage]="pageItems[selectedViewIndex].id === 0"
+            (result)="onEditPage($event)"
+            (delete)="onDeletePage()"
+          />
+        }
+        @default {
+          <p>Incorrect action</p>
+        }
       }
-      @case (LayoutActions.CREATE_PAGE) {
-        <ng-container *ngTemplateOutlet="templateCreatePage"></ng-container>
-      }
-      @case (LayoutActions.EDIT_PAGE) {
-        <ng-container *ngTemplateOutlet="templateEditPage"></ng-container>
-      }
-      @default {
-        <p>Incorrect action</p>
-      }
+    </div>
+    @if (isMobileView) {
+      <div class="github-cta">
+        <ng-container *ngTemplateOutlet="templateGithubCta"></ng-container>
+      </div>
     }
   </mat-sidenav>
   <mat-sidenav-content>
@@ -62,7 +82,18 @@
         }
       </aside>
     </mat-toolbar>
-    <section class="content"></section>
+    <section class="content">
+      <mat-tab-group
+        [selectedIndex]="selectedViewIndex"
+        (selectedTabChange)="selectedPageIndex.set($event.index)"
+      >
+        @for (item of pageItems; track item.id) {
+          <mat-tab [label]="item.metadata.slug">
+            {{ item.metadata.title }}
+          </mat-tab>
+        }
+      </mat-tab-group>
+    </section>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
@@ -136,24 +167,5 @@
   <mat-list>
     <mat-list-item>test 1</mat-list-item>
     <mat-list-item>test 2</mat-list-item>
-  </mat-list>
-</ng-template>
-
-<ng-template #templateCreatePage>
-  <!-- TODO: update to component -->
-  <mat-list>
-    <mat-list-item>test 1</mat-list-item>
-    <mat-list-item>test 2</mat-list-item>
-    <mat-list-item>test 3</mat-list-item>
-  </mat-list>
-</ng-template>
-
-<ng-template #templateEditPage>
-  <!-- TODO: update to component -->
-  <mat-list>
-    <mat-list-item>test 1</mat-list-item>
-    <mat-list-item>test 2</mat-list-item>
-    <mat-list-item>test 3</mat-list-item>
-    <mat-list-item>test 4</mat-list-item>
   </mat-list>
 </ng-template>

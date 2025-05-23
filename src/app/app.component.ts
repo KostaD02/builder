@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IconsRegistryService } from '@builder/infra/services';
+import { BuilderService, IconsRegistryService } from '@builder/infra/services';
 
 @Component({
   imports: [RouterModule],
@@ -8,9 +8,11 @@ import { IconsRegistryService } from '@builder/infra/services';
   template: `<router-outlet />`,
 })
 export class AppComponent {
+  private readonly builderService = inject(BuilderService);
   private readonly iconRegistryService = inject(IconsRegistryService);
 
   constructor() {
+    this.builderService.init();
     this.iconRegistryService.init();
   }
 }
