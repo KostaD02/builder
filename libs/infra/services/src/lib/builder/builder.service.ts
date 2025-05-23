@@ -1,5 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Metadata, Page, Pages } from '@builder/infra/types';
+import { STORAGE_KEYS } from '@builder/infra/consts';
 import { LocalStorageService } from '../storage/storage.service';
 
 @Injectable({
@@ -10,25 +11,27 @@ export class BuilderService {
 
   readonly pages = signal<Pages>([]);
 
+  get defaultPage(): Page {
+    return {
+      id: 0,
+      metadata: {
+        slug: 'index',
+        title: 'Home',
+        description: 'Home page',
+      },
+      children: [],
+    };
+  }
+
   init(): void {
-    const storageData = this.localStorageService.getItem('TODO: UPDATE ME');
+    const storageData = this.localStorageService.getItem(STORAGE_KEYS.DATA);
 
     if (storageData) {
-      this.initStorageData();
+      this.pages.set(storageData as unknown as Pages);
       return;
     }
 
-    this.pages.set([
-      {
-        id: 0,
-        metadata: {
-          slug: 'index',
-          title: 'Home',
-          description: 'Home page',
-        },
-        children: [],
-      },
-    ]);
+    this.pages.set([this.defaultPage]);
   }
 
   addNewPage(metadata: Metadata): void {
@@ -38,9 +41,9 @@ export class BuilderService {
         id: pages.length,
         children: [],
       };
-
       return [...pages, newPage];
     });
+    this.saveCurrentStateInStorage();
   }
 
   updatePage(index: number, metadata: Metadata): void {
@@ -48,6 +51,7 @@ export class BuilderService {
       pages[index].metadata = metadata;
       return pages;
     });
+    this.saveCurrentStateInStorage();
   }
 
   removePage(index: number): void {
@@ -55,9 +59,17 @@ export class BuilderService {
       pages.splice(index, 1);
       return pages;
     });
+    this.saveCurrentStateInStorage();
   }
 
-  private initStorageData(): void {
-    // TODO: Update me
+  saveCurrentStateInStorage(): void {
+    const data = this.pages();
+    this.localStorageService.setItem(STORAGE_KEYS.DATA, data);
+  }
+
+  reset(): void {
+    // TODO: show pop up if user is sure
+    this.pages.set([this.defaultPage]);
+    this.saveCurrentStateInStorage();
   }
 }

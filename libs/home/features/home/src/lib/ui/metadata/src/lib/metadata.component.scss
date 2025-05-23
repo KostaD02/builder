@@ -1,6 +1,6 @@
 form {
   width: 100%;
-  padding: 16px;
+  padding: var(--container-spacing);
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;

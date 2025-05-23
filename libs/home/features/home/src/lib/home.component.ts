@@ -18,6 +18,7 @@ import { BuilderView, Metadata } from '@builder/infra/types';
 import { CommonModule } from '@angular/common';
 import { MetadataComponent } from '@builder/metadata';
 import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
+import { ComponentPickerComponent } from '@builder/component-picker';
 
 @Component({
   selector: 'builder-home',
@@ -31,6 +32,7 @@ import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
     MatTooltipModule,
     MatToolbarModule,
     MetadataComponent,
+    ComponentPickerComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -47,14 +49,25 @@ export class HomeComponent {
   readonly pages = this.builderService.pages;
   readonly isDesktop = this.layoutService.isDesktop;
 
-  readonly selectedSidenavAction = signal<LayoutItem>(this.sidenavActions[1]);
+  readonly selectedSidenavAction = signal<LayoutItem>(this.sidenavActions[0]);
   readonly selectedPageIndex = signal<number>(0);
   readonly selectedView = signal<BuilderView>(
     this.isDesktop() ? BuilderView.Desktop : BuilderView.Mobile,
   );
 
   handleControlAction(item: LayoutItem): void {
-    console.log(item);
+    switch (item.action) {
+      case LayoutActions.RESET: {
+        this.builderService.reset();
+        this.selectedPageIndex.set(0);
+        this.selectedSidenavAction.set(this.sidenavActions[0]);
+        break;
+      }
+      default: {
+        console.log(item);
+        break;
+      }
+    }
   }
 
   onCreatePage(metadata: Metadata): void {

@@ -27,7 +27,7 @@
       @let selectedAction = selectedSidenavAction().action;
       @switch (selectedAction) {
         @case (LayoutActions.ADD_ELEMENT) {
-          <ng-container *ngTemplateOutlet="templateAddElement"></ng-container>
+          <builder-component-picker />
         }
         @case (LayoutActions.CREATE_PAGE) {
           <builder-metadata
@@ -89,7 +89,9 @@
       >
         @for (item of pageItems; track item.id) {
           <mat-tab [label]="item.metadata.slug">
-            {{ item.metadata.title }}
+            <section class="content-tab">
+              {{ item.metadata.title }}
+            </section>
           </mat-tab>
         }
       </mat-tab-group>
@@ -160,12 +162,4 @@
     <mat-icon svgIcon="github" class="github-logo"></mat-icon>
     Github
   </a>
-</ng-template>
-
-<ng-template #templateAddElement>
-  <!-- TODO: update to component -->
-  <mat-list>
-    <mat-list-item>test 1</mat-list-item>
-    <mat-list-item>test 2</mat-list-item>
-  </mat-list>
 </ng-template>

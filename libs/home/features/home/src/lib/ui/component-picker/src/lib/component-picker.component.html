@@ -1,1 +1,7 @@
-<p>ComponentPicker works!</p>
+<mat-selection-list role="list">
+  @for (item of components; track $index) {
+    <mat-list-item role="listitem" (click)="selectedToken.emit(item)">
+      {{ item.name }}
+    </mat-list-item>
+  }
+</mat-selection-list>
