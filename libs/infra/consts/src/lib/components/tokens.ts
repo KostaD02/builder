@@ -2,6 +2,10 @@ import { ComponentToken, ComponentType } from '@builder/infra/types';
 
 export const COMPONENTS_TOKENS: ComponentToken[] = [
   {
+    name: 'Container',
+    type: ComponentType.Container,
+  },
+  {
     name: 'Text',
     type: ComponentType.Text,
   },

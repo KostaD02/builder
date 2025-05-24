@@ -57,17 +57,23 @@ export class BuilderService {
     content: Omit<PageContent, 'id'>,
   ): void {
     this.pages.update((pages) => {
-      const page = pages[pageIndex];
-      // TODO: implement id generation
-      page.children.push({
-        id: `${pageIndex}-${page.children.length}`,
-        content: {
-          ...content,
-          id: 0,
+      const updatedPages = [...pages];
+      const page = { ...updatedPages[pageIndex] };
+
+      page.children = [
+        ...page.children,
+        {
+          id: `${pageIndex}-${page.children.length}`,
+          content: {
+            ...content,
+            id: Date.now(),
+          },
+          children: [],
         },
-        children: [],
-      });
-      return pages;
+      ];
+
+      updatedPages[pageIndex] = page;
+      return updatedPages;
     });
     this.saveCurrentStateInStorage();
   }

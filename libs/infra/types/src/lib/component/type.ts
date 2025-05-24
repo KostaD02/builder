@@ -8,6 +8,7 @@ export enum ComponentType {
   List = 'list',
   Table = 'table',
   Iframe = 'iframe',
+  Container = 'container',
   // TODO: fill and implement the rest of the components
   CustomHTML = 'custom-html',
   CustomCSS = 'custom-css',

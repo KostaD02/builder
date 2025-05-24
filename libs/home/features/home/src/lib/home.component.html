@@ -92,12 +92,7 @@
         @for (item of pageItems; track item.id) {
           <mat-tab [label]="item.metadata.slug">
             <section class="content-tab">
-              <!-- TODO: for now preview but refactor with components and angular to have ability for update -->
-              <iframe
-                [srcdoc]="srcDoc() | bypassSanitize"
-                frameborder="0"
-              ></iframe>
-              <!-- TODO: use iframe for preview -->
+              <builder-page-viewer [page]="item" />
             </section>
           </mat-tab>
         }

@@ -1,0 +1,19 @@
+<div class="page-viewer-content">
+  <ng-container
+    *ngTemplateOutlet="renderItems; context: { items: page()?.children || [] }"
+  ></ng-container>
+</div>
+
+<ng-template #renderItems let-items="items">
+  @for (item of items; track item.id) {
+    <ng-container
+      [builderPageItemRenderer]="item"
+      (elementClick)="onElementClick($event)"
+    ></ng-container>
+    @if (item.children.length > 0) {
+      <ng-container
+        *ngTemplateOutlet="renderItems; context: { items: item.children }"
+      ></ng-container>
+    }
+  }
+</ng-template>

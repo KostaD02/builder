@@ -18,8 +18,8 @@ import { BuilderView, ComponentToken, Metadata } from '@builder/infra/types';
 import { CommonModule } from '@angular/common';
 import { MetadataComponent } from '@builder/metadata';
 import { ComponentPickerComponent } from '@builder/component-picker';
+import { PageViewerComponent } from '@builder/page-viewer';
 import { COMPONENTS } from '@builder/infra/consts';
-import { BypassSanitizePipe } from '@builder/infra/pipes';
 import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
 
 @Component({
@@ -35,7 +35,7 @@ import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
     MatToolbarModule,
     MetadataComponent,
     ComponentPickerComponent,
-    BypassSanitizePipe,
+    PageViewerComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
