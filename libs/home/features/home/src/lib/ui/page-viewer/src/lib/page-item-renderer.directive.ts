@@ -68,6 +68,8 @@ export class PageItemRendererDirective implements OnInit, OnChanges, OnDestroy {
 
     this.setElementContent(element, pageItem);
 
+    this.renderChildren(element, pageItem);
+
     const hostElement = this.viewContainerRef.element.nativeElement;
     const parentElement = hostElement.parentNode;
 
@@ -76,6 +78,26 @@ export class PageItemRendererDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     this.createdElement = element;
+  }
+
+  private renderChildren(parentElement: HTMLElement, pageItem: PageItem): void {
+    if (!pageItem.children || pageItem.children.length === 0) {
+      return;
+    }
+
+    pageItem.children.forEach((child) => {
+      const childElement = this.renderer.createElement(child.content.tagName);
+
+      this.applyElementProperties(childElement, child);
+      this.addEventListeners(childElement, child);
+      this.setElementContent(childElement, child);
+
+      if (child.children && child.children.length > 0) {
+        this.renderChildren(childElement, child);
+      }
+
+      this.renderer.appendChild(parentElement, childElement);
+    });
   }
 
   private applyElementProperties(
