@@ -1,5 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Metadata, Page, Pages } from '@builder/infra/types';
+import {
+  ComponentPageItem,
+  Metadata,
+  Page,
+  PageItem,
+  Pages,
+} from '@builder/infra/types';
+import { STORAGE_KEYS } from '@builder/infra/consts';
 import { LocalStorageService } from '../storage/storage.service';
 
 @Injectable({
@@ -10,25 +17,31 @@ export class BuilderService {
 
   readonly pages = signal<Pages>([]);
 
+  get defaultPage(): Page {
+    return {
+      id: 0,
+      metadata: {
+        slug: 'index',
+        title: 'Home',
+        description: 'Home page',
+      },
+      children: [],
+    };
+  }
+
+  get uniqueId(): string {
+    return Math.random().toString(36).substring(2, 15);
+  }
+
   init(): void {
-    const storageData = this.localStorageService.getItem('TODO: UPDATE ME');
+    const storageData = this.localStorageService.getItem(STORAGE_KEYS.DATA);
 
     if (storageData) {
-      this.initStorageData();
+      this.pages.set(storageData as unknown as Pages);
       return;
     }
 
-    this.pages.set([
-      {
-        id: 0,
-        metadata: {
-          slug: 'index',
-          title: 'Home',
-          description: 'Home page',
-        },
-        children: [],
-      },
-    ]);
+    this.pages.set([this.defaultPage]);
   }
 
   addNewPage(metadata: Metadata): void {
@@ -38,8 +51,51 @@ export class BuilderService {
         id: pages.length,
         children: [],
       };
-
       return [...pages, newPage];
+    });
+    this.saveCurrentStateInStorage();
+  }
+
+  addNewElementInPage(
+    pageIndex: number,
+    componentItem: ComponentPageItem,
+  ): void {
+    this.pages.update((pages) => {
+      const updatedPages = [...pages];
+      const page = { ...updatedPages[pageIndex] };
+
+      const newPageItem: PageItem = {
+        id: this.uniqueId,
+        content: {
+          ...componentItem.content,
+          id: this.uniqueId,
+        },
+        children: this.generateChildrenWithIds(
+          componentItem.children || [],
+          pageIndex,
+        ),
+      };
+
+      page.children = [...page.children, newPageItem];
+      updatedPages[pageIndex] = page;
+      return updatedPages;
+    });
+    this.saveCurrentStateInStorage();
+  }
+
+  private generateChildrenWithIds(
+    children: ComponentPageItem[],
+    pageIndex: number,
+  ): PageItem[] {
+    return children.map((child) => {
+      return {
+        id: this.uniqueId,
+        content: {
+          ...child.content,
+          id: this.uniqueId,
+        },
+        children: this.generateChildrenWithIds(child.children || [], pageIndex),
+      };
     });
   }
 
@@ -48,6 +104,7 @@ export class BuilderService {
       pages[index].metadata = metadata;
       return pages;
     });
+    this.saveCurrentStateInStorage();
   }
 
   removePage(index: number): void {
@@ -55,9 +112,17 @@ export class BuilderService {
       pages.splice(index, 1);
       return pages;
     });
+    this.saveCurrentStateInStorage();
   }
 
-  private initStorageData(): void {
-    // TODO: Update me
+  saveCurrentStateInStorage(): void {
+    const data = this.pages();
+    this.localStorageService.setItem(STORAGE_KEYS.DATA, data);
+  }
+
+  reset(): void {
+    // TODO: show pop up if user is sure
+    this.pages.set([this.defaultPage]);
+    this.saveCurrentStateInStorage();
   }
 }

@@ -5,7 +5,7 @@ export enum LayoutActions {
   UNDO = 'undo',
   REDO = 'redo',
   DOWNLOAD = 'download',
-  REFRESH = 'refresh',
+  RESET = 'reset',
 }
 
 export interface LayoutItem {

@@ -4,6 +4,7 @@
   --primary-color: var(--mat-sys-primary, #005cbb);
   --primary-container-color: var(--mat-sys-primary-container, #d7e3ff);
   --divider-color: #37373742;
+  --container-spacing: 16px;
 }
 
 * {
@@ -29,6 +30,9 @@ body {
 }
 
 button {
+  &.secondary {
+    --mdc-text-button-label-text-color: #1a1b1f;
+  }
   &.warn {
     @include mat.button-overrides(
       (
@@ -45,4 +49,13 @@ button {
       )
     );
   }
+}
+
+*::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--divider-color);
 }

@@ -1,0 +1,8 @@
+mat-selection-list {
+  height: 100%;
+  padding: 0;
+
+  mat-list-item {
+    user-select: none;
+  }
+}

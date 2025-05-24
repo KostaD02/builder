@@ -4,3 +4,4 @@
 /.nx/cache
 /.nx/workspace-data
 .angular
+/libs/infra/types/src/lib/component/styles.ts
