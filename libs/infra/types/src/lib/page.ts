@@ -10,16 +10,22 @@ export interface Page {
 export interface PageItem {
   id: `${number}-${number}`;
   content: PageContent;
-  children: PageItem[];
+  children?: PageItem[];
 }
 
 export interface PageContent {
   id: number;
   tagName: string;
-  content: string;
+  content?: string;
   class?: string;
+  attributes?: Record<string, string>;
   style?: ComponentGeneralStyle;
   javascript?: string;
 }
+
+export type ComponentPageItem = {
+  content: Omit<PageContent, 'id'>;
+  children?: ComponentPageItem[];
+};
 
 export type Pages = Page[];

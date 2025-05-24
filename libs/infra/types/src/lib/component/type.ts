@@ -7,7 +7,9 @@ export enum ComponentType {
   Form = 'form',
   List = 'list',
   Table = 'table',
-  Iframe = 'iframe',
+  Input = 'input',
+  Label = 'label',
+  // Iframe = 'iframe',
   Container = 'container',
   // TODO: fill and implement the rest of the components
   CustomHTML = 'custom-html',

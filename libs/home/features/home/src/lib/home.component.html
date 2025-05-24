@@ -86,6 +86,7 @@
     </mat-toolbar>
     <section class="content">
       <mat-tab-group
+        dynamicHeight
         [selectedIndex]="selectedViewIndex"
         (selectedTabChange)="selectedPageIndex.set($event.index)"
       >

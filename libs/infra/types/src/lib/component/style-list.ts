@@ -25,6 +25,7 @@ import {
 export interface ComponentBoxStyles {
   width: Size;
   height: Size;
+  objectFit: ImageFit;
   backgroundColor: Color;
   backgroundImage: ImageFit;
   backgroundRepeat: boolean;

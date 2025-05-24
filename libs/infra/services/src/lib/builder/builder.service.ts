@@ -1,5 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import {
+  ComponentPageItem,
   Metadata,
   Page,
   PageContent,
@@ -54,28 +55,48 @@ export class BuilderService {
 
   addNewElementInPage(
     pageIndex: number,
-    content: Omit<PageContent, 'id'>,
+    componentItem: ComponentPageItem,
   ): void {
     this.pages.update((pages) => {
       const updatedPages = [...pages];
       const page = { ...updatedPages[pageIndex] };
 
-      page.children = [
-        ...page.children,
-        {
-          id: `${pageIndex}-${page.children.length}`,
-          content: {
-            ...content,
-            id: Date.now(),
-          },
-          children: [],
+      const newPageItem: PageItem = {
+        id: `${pageIndex}-${page.children.length}`,
+        content: {
+          ...componentItem.content,
+          id: Date.now(),
         },
-      ];
+        children: this.generateChildrenWithIds(
+          componentItem.children || [],
+          pageIndex,
+        ),
+      };
 
+      page.children = [...page.children, newPageItem];
       updatedPages[pageIndex] = page;
       return updatedPages;
     });
     this.saveCurrentStateInStorage();
+  }
+
+  private childCounter = 0;
+
+  private generateChildrenWithIds(
+    children: ComponentPageItem[],
+    pageIndex: number,
+  ): PageItem[] {
+    return children.map((child) => {
+      const childId = `${pageIndex}-${this.childCounter++}`;
+      return {
+        id: childId as `${number}-${number}`,
+        content: {
+          ...child.content,
+          id: Date.now() + this.childCounter,
+        },
+        children: this.generateChildrenWithIds(child.children || [], pageIndex),
+      };
+    });
   }
 
   updatePage(index: number, metadata: Metadata): void {
@@ -103,59 +124,5 @@ export class BuilderService {
     // TODO: show pop up if user is sure
     this.pages.set([this.defaultPage]);
     this.saveCurrentStateInStorage();
-  }
-
-  buildSrcDoc(activeIndex: number): string {
-    const page = this.pages()[activeIndex];
-    const title = page.metadata.title;
-    const body = this.processPageItems(page.children);
-    // TODO: handle style and script
-    return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title}</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-    main {
-      width: 100%;
-    }
-  </style>
-</head>
-<body>
-  <main>
-    ${body}
-    <div style="display: none" />
-  </main>
-</body>
-</html>
-`;
-  }
-
-  private processPageItems(items: PageItem[]): string {
-    let result = '';
-
-    for (const item of items) {
-      const { tagName, content, class: className, style } = item.content;
-      const children = this.processPageItems(item.children);
-      const styleString = style
-        ? Object.entries(style)
-            .map(([key, value]) => `${key}: ${value};`)
-            .join(' ')
-        : '';
-
-      result += `<${tagName} class="${className}" style="${styleString}">${content}${children}</${tagName}>`;
-
-      if (item?.children && item.children.length > 0) {
-        result += this.processPageItems(item.children);
-      }
-    }
-
-    return result;
   }
 }

@@ -95,45 +95,10 @@ export class PageItemRendererDirective implements OnInit, OnChanges, OnDestroy {
       });
     }
 
-    this.renderer.setAttribute(element, 'data-item-id', pageItem.id);
-    this.renderer.setAttribute(
-      element,
-      'data-content-id',
-      content.id.toString(),
-    );
-    this.renderer.setAttribute(element, 'builderElement', '');
-
-    this.applyTagSpecificAttributes(element, pageItem);
-  }
-
-  private applyTagSpecificAttributes(
-    element: HTMLElement,
-    pageItem: PageItem,
-  ): void {
-    const { tagName } = pageItem.content;
-
-    switch (tagName.toLowerCase()) {
-      case 'img':
-        this.renderer.setAttribute(
-          element,
-          'src',
-          'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
-        );
-        this.renderer.setAttribute(element, 'alt', 'Image');
-        this.renderer.setStyle(element, 'height', '300px');
-        this.renderer.setStyle(element, 'object-fit', 'cover');
-        break;
-      case 'a':
-        this.renderer.setAttribute(element, 'href', 'javascript:void(0)');
-        break;
-      case 'iframe':
-        this.renderer.setAttribute(element, 'src', '');
-        this.renderer.setAttribute(element, 'frameborder', '0');
-        break;
-      case 'input':
-        this.renderer.setAttribute(element, 'type', 'text');
-        this.renderer.setAttribute(element, 'placeholder', '');
-        break;
+    if (content.attributes) {
+      Object.entries(content.attributes).forEach(([key, value]) => {
+        this.renderer.setAttribute(element, key, value);
+      });
     }
   }
 

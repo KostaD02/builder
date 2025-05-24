@@ -30,6 +30,14 @@ export const COMPONENTS_TOKENS: ComponentToken[] = [
     type: ComponentType.Form,
   },
   {
+    name: 'Input',
+    type: ComponentType.Input,
+  },
+  {
+    name: 'Label',
+    type: ComponentType.Label,
+  },
+  {
     name: 'List',
     type: ComponentType.List,
   },
@@ -37,10 +45,10 @@ export const COMPONENTS_TOKENS: ComponentToken[] = [
     name: 'Table',
     type: ComponentType.Table,
   },
-  {
-    name: 'Iframe',
-    type: ComponentType.Iframe,
-  },
+  // {
+  //   name: 'Iframe',
+  //   type: ComponentType.Iframe,
+  // },
   {
     name: 'Custom HTML',
     type: ComponentType.CustomHTML,

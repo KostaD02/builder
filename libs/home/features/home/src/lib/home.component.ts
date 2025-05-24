@@ -58,13 +58,6 @@ export class HomeComponent {
     this.isDesktop() ? BuilderView.Desktop : BuilderView.Mobile,
   );
 
-  // TODO: remove
-  readonly srcDoc = computed(() =>
-    this.pages()
-      ? this.builderService.buildSrcDoc(this.selectedPageIndex())
-      : '',
-  );
-
   handleControlAction(item: LayoutItem): void {
     switch (item.action) {
       case LayoutActions.RESET: {
