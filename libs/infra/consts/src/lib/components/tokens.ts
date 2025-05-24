@@ -45,20 +45,21 @@ export const COMPONENTS_TOKENS: ComponentToken[] = [
     name: 'Table',
     type: ComponentType.Table,
   },
+  // TODO: handle later
   // {
   //   name: 'Iframe',
   //   type: ComponentType.Iframe,
   // },
-  {
-    name: 'Custom HTML',
-    type: ComponentType.CustomHTML,
-  },
-  {
-    name: 'Custom CSS',
-    type: ComponentType.CustomCSS,
-  },
-  {
-    name: 'Custom JS',
-    type: ComponentType.CustomJS,
-  },
+  // {
+  //   name: 'Custom HTML',
+  //   type: ComponentType.CustomHTML,
+  // },
+  // {
+  //   name: 'Custom CSS',
+  //   type: ComponentType.CustomCSS,
+  // },
+  // {
+  //   name: 'Custom JS',
+  //   type: ComponentType.CustomJS,
+  // },
 ];

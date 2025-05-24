@@ -5,6 +5,7 @@ export const LINK: ComponentPageItem = {
     class: 'link',
     tagName: 'a',
     content: 'Example link',
+    isWrapper: false,
     attributes: {
       href: 'javascript:void(0)',
       target: '_self',

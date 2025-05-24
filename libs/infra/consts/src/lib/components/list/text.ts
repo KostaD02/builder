@@ -5,5 +5,9 @@ export const TEXT: ComponentPageItem = {
     class: 'text',
     tagName: 'p',
     content: 'Example text',
+    isWrapper: false,
+    style: {
+      maxWidth: 'fit-content',
+    },
   },
 };

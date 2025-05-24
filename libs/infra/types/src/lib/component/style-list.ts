@@ -24,7 +24,11 @@ import {
 
 export interface ComponentBoxStyles {
   width: Size;
+  minWidth: Size;
+  maxWidth: Size;
   height: Size;
+  minHeight: Size;
+  maxHeight: Size;
   objectFit: ImageFit;
   backgroundColor: Color;
   backgroundImage: ImageFit;

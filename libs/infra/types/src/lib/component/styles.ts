@@ -9,7 +9,7 @@ export type Overflow = 'visible' | 'hidden' | 'scroll' | 'auto';
 
 export type ImageFit = 'auto' | 'contain' | 'cover';
 
-export type Size = `${number}px` | `${number}rem` | `${number}em` | `${number}%` | `${number}vh` | `${number}vw` | 'auto' | 'inherit' | 'initial' | 'unset';
+export type Size = `${number}px` | `${number}rem` | `${number}em` | `${number}%` | `${number}vh` | `${number}vw` | 'auto' | 'inherit' | 'initial' | 'unset' | 'fit-content' | 'min-content' | 'max-content';
 export type Spacing = `${Size}` | `${Size} ${Size}` | `${Size} ${Size} ${Size}` | `${Size} ${Size} ${Size} ${Size}`;
 
 export type FontTheme = 'heading-1' | 'heading-2' | 'heading-3' | 'heading-4' | 'heading-5' | 'heading-6' | 'paragraph-1' | 'paragraph-2' | 'paragraph-3';

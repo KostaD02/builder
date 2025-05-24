@@ -4,6 +4,6 @@ export const CONTAINER: ComponentPageItem = {
   content: {
     class: 'container',
     tagName: 'div',
-    content: 'Example container',
+    isWrapper: true,
   },
 };

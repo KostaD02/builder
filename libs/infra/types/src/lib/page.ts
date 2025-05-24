@@ -16,6 +16,7 @@ export interface PageItem {
 export interface PageContent {
   id: string;
   tagName: string;
+  isWrapper: boolean;
   content?: string;
   class?: string;
   attributes?: Record<string, string>;

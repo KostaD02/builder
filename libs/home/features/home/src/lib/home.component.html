@@ -93,7 +93,10 @@
         @for (item of pageItems; track item.id) {
           <mat-tab [label]="item.metadata.slug">
             <section class="content-tab">
-              <builder-page-viewer [page]="item" />
+              <builder-page-viewer
+                [page]="item"
+                (selectedWrapperElement)="selectedWrapperElement.set($event)"
+              />
             </section>
           </mat-tab>
         }

@@ -5,5 +5,6 @@ export const BUTTON: ComponentPageItem = {
     class: 'btn',
     tagName: 'button',
     content: 'Example button',
+    isWrapper: false,
   },
 };

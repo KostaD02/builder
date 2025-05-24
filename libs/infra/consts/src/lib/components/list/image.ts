@@ -4,6 +4,7 @@ export const IMAGE: ComponentPageItem = {
   content: {
     class: 'image',
     tagName: 'img',
+    isWrapper: false,
     style: {
       height: '300px',
       objectFit: 'cover',

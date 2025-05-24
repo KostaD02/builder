@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -14,7 +13,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LayoutActions, LayoutItem } from '@builder/home/data-access';
 import { BuilderService, LayoutService } from '@builder/infra/services';
-import { BuilderView, ComponentToken, Metadata } from '@builder/infra/types';
+import {
+  BuilderView,
+  ComponentToken,
+  Metadata,
+  PageItem,
+} from '@builder/infra/types';
 import { CommonModule } from '@angular/common';
 import { MetadataComponent } from '@builder/metadata';
 import { ComponentPickerComponent } from '@builder/component-picker';
@@ -57,6 +61,7 @@ export class HomeComponent {
   readonly selectedView = signal<BuilderView>(
     this.isDesktop() ? BuilderView.Desktop : BuilderView.Mobile,
   );
+  readonly selectedWrapperElement = signal<PageItem | null>(null);
 
   handleControlAction(item: LayoutItem): void {
     switch (item.action) {
@@ -64,6 +69,7 @@ export class HomeComponent {
         this.builderService.reset();
         this.selectedPageIndex.set(0);
         this.selectedSidenavAction.set(this.sidenavActions[0]);
+        this.selectedWrapperElement.set(null);
         break;
       }
       default: {

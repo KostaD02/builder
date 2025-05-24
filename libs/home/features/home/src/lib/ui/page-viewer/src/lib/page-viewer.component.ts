@@ -18,11 +18,9 @@ import { PageItemRendererDirective } from './page-item-renderer.directive';
 export class PageViewerComponent {
   readonly page = input<Page>();
 
-  readonly elementClick = output<PageItem>();
-  readonly elementSelect = output<PageItem>();
+  readonly selectedWrapperElement = output<PageItem>();
 
   onElementClick(pageItem: PageItem): void {
     console.log('Element clicked:', pageItem);
-    this.elementClick.emit(pageItem);
   }
 }
