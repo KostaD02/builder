@@ -8,13 +8,13 @@ export interface Page {
 }
 
 export interface PageItem {
-  id: `${number}-${number}`;
+  id: string;
   content: PageContent;
   children?: PageItem[];
 }
 
 export interface PageContent {
-  id: number;
+  id: string;
   tagName: string;
   content?: string;
   class?: string;

@@ -22,7 +22,6 @@ export class PageItemRendererDirective implements OnInit, OnChanges, OnDestroy {
 
   readonly builderPageItemRenderer = input<PageItem>();
   readonly elementClick = output<PageItem>();
-  readonly elementSelect = output<PageItem>();
 
   private createdElement: HTMLElement | null = null;
 
@@ -105,7 +104,9 @@ export class PageItemRendererDirective implements OnInit, OnChanges, OnDestroy {
     pageItem: PageItem,
   ): void {
     const content = pageItem.content;
+
     this.renderer.setStyle(element, 'cursor', 'pointer');
+    this.renderer.setAttribute(element, 'data-id', pageItem.id);
 
     if (content.class) {
       this.renderer.addClass(element, content.class);

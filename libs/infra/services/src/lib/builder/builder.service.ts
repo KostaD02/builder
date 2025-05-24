@@ -3,7 +3,6 @@ import {
   ComponentPageItem,
   Metadata,
   Page,
-  PageContent,
   PageItem,
   Pages,
 } from '@builder/infra/types';
@@ -28,6 +27,10 @@ export class BuilderService {
       },
       children: [],
     };
+  }
+
+  get uniqueId(): string {
+    return Math.random().toString(36).substring(2, 15);
   }
 
   init(): void {
@@ -62,10 +65,10 @@ export class BuilderService {
       const page = { ...updatedPages[pageIndex] };
 
       const newPageItem: PageItem = {
-        id: `${pageIndex}-${page.children.length}`,
+        id: this.uniqueId,
         content: {
           ...componentItem.content,
-          id: Date.now(),
+          id: this.uniqueId,
         },
         children: this.generateChildrenWithIds(
           componentItem.children || [],
@@ -80,19 +83,16 @@ export class BuilderService {
     this.saveCurrentStateInStorage();
   }
 
-  private childCounter = 0;
-
   private generateChildrenWithIds(
     children: ComponentPageItem[],
     pageIndex: number,
   ): PageItem[] {
     return children.map((child) => {
-      const childId = `${pageIndex}-${this.childCounter++}`;
       return {
-        id: childId as `${number}-${number}`,
+        id: this.uniqueId,
         content: {
           ...child.content,
-          id: Date.now() + this.childCounter,
+          id: this.uniqueId,
         },
         children: this.generateChildrenWithIds(child.children || [], pageIndex),
       };
