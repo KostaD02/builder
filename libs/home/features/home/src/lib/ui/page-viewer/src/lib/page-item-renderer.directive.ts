@@ -6,6 +6,7 @@ import {
   Renderer2,
   output,
   ViewContainerRef,
+  OnDestroy,
 } from '@angular/core';
 import { PageItem } from '@builder/infra/types';
 
@@ -13,7 +14,7 @@ import { PageItem } from '@builder/infra/types';
   selector: '[builderPageItemRenderer]',
   standalone: true,
 })
-export class PageItemRendererDirective implements OnInit {
+export class PageItemRendererDirective implements OnInit, OnDestroy {
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly renderer = inject(Renderer2);
 
@@ -23,6 +24,17 @@ export class PageItemRendererDirective implements OnInit {
 
   ngOnInit(): void {
     this.renderItem();
+  }
+
+  ngOnDestroy(): void {
+    const rootElement = this.rootElement();
+    const item = this.builderPageItemRenderer();
+    if (rootElement && item) {
+      const element = rootElement.querySelector(`[data-id="${item.id}"]`);
+      if (element) {
+        element.remove();
+      }
+    }
   }
 
   private renderItem(): void {
@@ -88,13 +100,17 @@ export class PageItemRendererDirective implements OnInit {
 
     element.addEventListener('click', (event: MouseEvent) => {
       event.stopPropagation();
-      this.handleElementClick(element);
+      if (isWrapper) {
+        this.selectWrapperElement(element);
+      } else {
+        // TODO: open modal for edit
+      }
     });
 
     return element;
   }
 
-  private handleElementClick(element: HTMLElement): void {
+  private selectWrapperElement(element: HTMLElement): void {
     this.elementClick.emit();
     const rootElement = this.rootElement();
     const selected = rootElement?.querySelector('.selected');

@@ -12,6 +12,10 @@ export const CARD: ComponentPageItem = {
         tagName: 'h3',
         content: 'Card Title',
         isWrapper: false,
+        style: {
+          color: '#f00',
+          maxWidth: 'fit-content',
+        },
       },
     },
     {
@@ -19,6 +23,10 @@ export const CARD: ComponentPageItem = {
         tagName: 'p',
         content: 'Card content goes here.',
         isWrapper: false,
+        style: {
+          color: '#0f0',
+          maxWidth: 'fit-content',
+        },
       },
     },
   ],
