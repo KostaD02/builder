@@ -36,7 +36,7 @@ export const CONTROL_ACTIONS: LayoutItem[] = [
   },
   {
     icon: 'refresh',
-    text: 'Refresh',
-    action: LayoutActions.REFRESH,
+    text: 'Reset',
+    action: LayoutActions.RESET,
   },
 ];

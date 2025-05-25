@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -14,9 +13,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LayoutActions, LayoutItem } from '@builder/home/data-access';
 import { BuilderService, LayoutService } from '@builder/infra/services';
-import { BuilderView, Metadata } from '@builder/infra/types';
+import {
+  BuilderView,
+  ComponentToken,
+  Metadata,
+  PageItem,
+} from '@builder/infra/types';
 import { CommonModule } from '@angular/common';
 import { MetadataComponent } from '@builder/metadata';
+import { ComponentPickerComponent } from '@builder/component-picker';
+import { PageViewerComponent } from '@builder/page-viewer';
+import { COMPONENTS } from '@builder/infra/consts';
 import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
 
 @Component({
@@ -31,6 +38,8 @@ import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
     MatTooltipModule,
     MatToolbarModule,
     MetadataComponent,
+    ComponentPickerComponent,
+    PageViewerComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -47,14 +56,27 @@ export class HomeComponent {
   readonly pages = this.builderService.pages;
   readonly isDesktop = this.layoutService.isDesktop;
 
-  readonly selectedSidenavAction = signal<LayoutItem>(this.sidenavActions[1]);
+  readonly selectedSidenavAction = signal<LayoutItem>(this.sidenavActions[0]);
   readonly selectedPageIndex = signal<number>(0);
   readonly selectedView = signal<BuilderView>(
     this.isDesktop() ? BuilderView.Desktop : BuilderView.Mobile,
   );
+  readonly selectedWrapperElement = signal<PageItem | null>(null);
 
   handleControlAction(item: LayoutItem): void {
-    console.log(item);
+    switch (item.action) {
+      case LayoutActions.RESET: {
+        this.builderService.reset();
+        this.selectedPageIndex.set(0);
+        this.selectedSidenavAction.set(this.sidenavActions[0]);
+        this.selectedWrapperElement.set(null);
+        break;
+      }
+      default: {
+        console.log(item);
+        break;
+      }
+    }
   }
 
   onCreatePage(metadata: Metadata): void {
@@ -72,5 +94,13 @@ export class HomeComponent {
     this.selectedPageIndex.set(0);
     this.selectedSidenavAction.set(this.sidenavActions[1]);
     this.builderService.removePage(selectedIndex);
+  }
+
+  onNewElementAddition(token: ComponentToken): void {
+    this.builderService.addNewElementInPage(
+      this.selectedPageIndex(),
+      COMPONENTS[token.type],
+      this.selectedWrapperElement(),
+    );
   }
 }
