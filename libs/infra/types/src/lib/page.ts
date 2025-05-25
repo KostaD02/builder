@@ -9,12 +9,12 @@ export interface Page {
 
 export interface PageItem {
   id: string;
+  parentId: string;
   content: PageContent;
   children?: PageItem[];
 }
 
 export interface PageContent {
-  id: string;
   tagName: string;
   isWrapper: boolean;
   content?: string;
@@ -25,7 +25,7 @@ export interface PageContent {
 }
 
 export type ComponentPageItem = {
-  content: Omit<PageContent, 'id'>;
+  content: PageContent;
   children?: ComponentPageItem[];
 };
 

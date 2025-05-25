@@ -4,11 +4,8 @@ import {
   input,
   OnInit,
   Renderer2,
-  OnChanges,
-  SimpleChanges,
   output,
   ViewContainerRef,
-  OnDestroy,
 } from '@angular/core';
 import { PageItem } from '@builder/infra/types';
 
@@ -16,128 +13,94 @@ import { PageItem } from '@builder/infra/types';
   selector: '[builderPageItemRenderer]',
   standalone: true,
 })
-export class PageItemRendererDirective implements OnInit, OnChanges, OnDestroy {
+export class PageItemRendererDirective implements OnInit {
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly renderer = inject(Renderer2);
 
   readonly builderPageItemRenderer = input<PageItem>();
-  readonly elementClick = output<PageItem>();
-
-  private createdElement: HTMLElement | null = null;
+  readonly rootElement = input<HTMLElement>();
+  readonly elementClick = output<void>();
 
   ngOnInit(): void {
-    this.renderElement();
+    this.renderItem();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['builderPageItemRenderer']) {
-      this.renderElement();
+  private renderItem(): void {
+    const rootElement = this.rootElement();
+    const item = this.builderPageItemRenderer();
+    if (!item) {
+      this.viewContainerRef.clear();
+      return;
     }
-  }
+    const isRootLevelItem = !isNaN(Number(item.parentId));
+    const element = this.getRenderedItem(item);
 
-  ngOnDestroy(): void {
-    this.cleanup();
-  }
-
-  private cleanup(): void {
-    if (this.createdElement && this.createdElement.parentNode) {
-      this.renderer.removeChild(
-        this.createdElement.parentNode,
-        this.createdElement,
+    if (!isRootLevelItem) {
+      const parentNode = rootElement?.querySelector(
+        `[data-id="${item.parentId}"]`,
       );
-    }
-    this.viewContainerRef.clear();
-  }
-
-  private renderElement(): void {
-    const pageItem = this.builderPageItemRenderer();
-
-    if (!pageItem) {
-      this.cleanup();
-      return;
-    }
-
-    this.cleanup();
-
-    const element = this.renderer.createElement(pageItem.content.tagName);
-
-    this.applyElementProperties(element, pageItem);
-
-    this.addEventListeners(element, pageItem);
-
-    this.setElementContent(element, pageItem);
-
-    this.renderChildren(element, pageItem);
-
-    const hostElement = this.viewContainerRef.element.nativeElement;
-    const parentElement = hostElement.parentNode;
-
-    if (parentElement) {
-      this.renderer.insertBefore(parentElement, element, hostElement);
-    }
-
-    this.createdElement = element;
-  }
-
-  private renderChildren(parentElement: HTMLElement, pageItem: PageItem): void {
-    if (!pageItem.children || pageItem.children.length === 0) {
-      return;
-    }
-
-    pageItem.children.forEach((child) => {
-      const childElement = this.renderer.createElement(child.content.tagName);
-
-      this.applyElementProperties(childElement, child);
-      this.addEventListeners(childElement, child);
-      this.setElementContent(childElement, child);
-
-      if (child.children && child.children.length > 0) {
-        this.renderChildren(childElement, child);
+      if (parentNode) {
+        this.renderer.appendChild(parentNode, element);
+        return;
       }
+    }
 
-      this.renderer.appendChild(parentElement, childElement);
-    });
+    this.renderer.appendChild(rootElement, element);
   }
 
-  private applyElementProperties(
-    element: HTMLElement,
-    pageItem: PageItem,
-  ): void {
-    const content = pageItem.content;
+  private getRenderedItem(item: PageItem): HTMLElement {
+    const element = document.createElement(item.content.tagName);
+    const {
+      isWrapper,
+      content,
+      class: className,
+      attributes,
+      style,
+    } = item.content;
+    this.renderer.setAttribute(element, 'data-id', item.id);
+    this.renderer.setAttribute(element, 'data-parent-id', item.parentId);
 
-    this.renderer.setStyle(element, 'cursor', 'pointer');
-    this.renderer.setAttribute(element, 'data-id', pageItem.id);
-
-    if (content.class) {
-      this.renderer.addClass(element, content.class);
+    if (isWrapper) {
+      this.renderer.addClass(element, 'wrapper');
     }
 
-    if (content.style) {
-      Object.entries(content.style).forEach(([property, value]) => {
-        this.renderer.setStyle(element, property, value);
-      });
+    if (content) {
+      element.innerHTML = content;
     }
 
-    if (content.attributes) {
-      Object.entries(content.attributes).forEach(([key, value]) => {
+    if (className) {
+      this.renderer.addClass(element, className);
+    }
+
+    if (attributes) {
+      Object.entries(attributes).forEach(([key, value]) => {
         this.renderer.setAttribute(element, key, value);
       });
     }
-  }
 
-  private setElementContent(element: HTMLElement, pageItem: PageItem): void {
-    const { tagName, content } = pageItem.content;
-
-    const selfClosingTags = ['img', 'input', 'br', 'hr', 'iframe'];
-    if (!selfClosingTags.includes(tagName.toLowerCase()) && content) {
-      this.renderer.setProperty(element, 'textContent', content);
+    if (style) {
+      Object.entries(style).forEach(([key, value]) => {
+        this.renderer.setStyle(element, key, value);
+      });
     }
+
+    // TODO: handle javascript part
+
+    element.addEventListener('click', (event: MouseEvent) => {
+      event.stopPropagation();
+      this.handleElementClick(element);
+    });
+
+    return element;
   }
 
-  private addEventListeners(element: HTMLElement, pageItem: PageItem): void {
-    this.renderer.listen(element, 'click', (event: Event) => {
-      event.stopPropagation();
-      this.elementClick.emit(pageItem);
-    });
+  private handleElementClick(element: HTMLElement): void {
+    this.elementClick.emit();
+    const rootElement = this.rootElement();
+    const selected = rootElement?.querySelector('.selected');
+    if (selected) {
+      this.renderer.removeClass(selected, 'selected');
+    }
+    this.renderer.addClass(element, 'selected');
   }
 }

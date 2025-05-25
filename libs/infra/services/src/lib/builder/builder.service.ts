@@ -63,16 +63,15 @@ export class BuilderService {
     this.pages.update((pages) => {
       const updatedPages = [...pages];
       const page = { ...updatedPages[pageIndex] };
-
+      const id = this.uniqueId;
       const newPageItem: PageItem = {
-        id: this.uniqueId,
-        content: {
-          ...componentItem.content,
-          id: this.uniqueId,
-        },
+        id,
+        parentId: page.id.toString(),
+        content: componentItem.content,
         children: this.generateChildrenWithIds(
           componentItem.children || [],
           pageIndex,
+          id,
         ),
       };
 
@@ -86,15 +85,19 @@ export class BuilderService {
   private generateChildrenWithIds(
     children: ComponentPageItem[],
     pageIndex: number,
+    parentId: string,
   ): PageItem[] {
     return children.map((child) => {
+      const childContentId = this.uniqueId;
       return {
-        id: this.uniqueId,
-        content: {
-          ...child.content,
-          id: this.uniqueId,
-        },
-        children: this.generateChildrenWithIds(child.children || [], pageIndex),
+        id: childContentId,
+        parentId,
+        content: child.content,
+        children: this.generateChildrenWithIds(
+          child.children || [],
+          pageIndex,
+          childContentId,
+        ),
       };
     });
   }

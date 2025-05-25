@@ -1,11 +1,34 @@
-@let pageContent = page();
-@if (pageContent && pageContent.children.length > 0) {
-  @for (item of pageContent.children; track item.id) {
-    <ng-container
-      [builderPageItemRenderer]="item"
-      (elementClick)="onElementClick($event)"
-    ></ng-container>
+<section #rootElement>
+  @let pageContent = page();
+  @if (pageContent && pageContent.children.length > 0) {
+    @for (item of pageContent.children; track item.id) {
+      <ng-container
+        [rootElement]="rootElement"
+        [builderPageItemRenderer]="item"
+        (elementClick)="onElementClick(item)"
+      ></ng-container>
+      <ng-container
+        [ngTemplateOutlet]="childrenRenderer"
+        [ngTemplateOutletContext]="{ children: item.children }"
+      ></ng-container>
+    }
+  } @else {
+    <p>No page content</p>
   }
-} @else {
-  <p>No page content</p>
-}
+
+  <ng-template #childrenRenderer let-children="children">
+    @for (child of children; track child.id) {
+      <ng-container
+        [rootElement]="rootElement"
+        [builderPageItemRenderer]="child"
+        (elementClick)="onElementClick(child)"
+      ></ng-container>
+      @if (child.children.length > 0) {
+        <ng-container
+          [ngTemplateOutlet]="childrenRenderer"
+          [ngTemplateOutletContext]="{ children: child.children }"
+        ></ng-container>
+      }
+    }
+  </ng-template>
+</section>
