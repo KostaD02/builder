@@ -23,6 +23,6 @@ export class PageViewerComponent {
   readonly selectedWrapperElement = output<PageItem>();
 
   onElementClick(pageItem: PageItem): void {
-    console.log('Element clicked:', pageItem);
+    console.log('Clicked', pageItem);
   }
 }

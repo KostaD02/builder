@@ -21,6 +21,7 @@ export class PageItemRendererDirective implements OnInit, OnDestroy {
   readonly builderPageItemRenderer = input<PageItem>();
   readonly rootElement = input<HTMLElement>();
   readonly elementClick = output<void>();
+  readonly wrapperElementClick = output<PageItem>();
 
   ngOnInit(): void {
     this.renderItem();
@@ -100,10 +101,9 @@ export class PageItemRendererDirective implements OnInit, OnDestroy {
 
     element.addEventListener('click', (event: MouseEvent) => {
       event.stopPropagation();
+      this.elementClick.emit();
       if (isWrapper) {
         this.selectWrapperElement(element);
-      } else {
-        // TODO: open modal for edit
       }
     });
 
@@ -111,12 +111,15 @@ export class PageItemRendererDirective implements OnInit, OnDestroy {
   }
 
   private selectWrapperElement(element: HTMLElement): void {
-    this.elementClick.emit();
     const rootElement = this.rootElement();
+    const item = this.builderPageItemRenderer();
     const selected = rootElement?.querySelector('.selected');
     if (selected) {
       this.renderer.removeClass(selected, 'selected');
     }
     this.renderer.addClass(element, 'selected');
+    if (item) {
+      this.wrapperElementClick.emit(item);
+    }
   }
 }

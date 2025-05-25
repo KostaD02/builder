@@ -11,7 +11,7 @@ export interface PageItem {
   id: string;
   parentId: string;
   content: PageContent;
-  children?: PageItem[];
+  children: PageItem[];
 }
 
 export interface PageContent {

@@ -59,6 +59,7 @@ export class BuilderService {
   addNewElementInPage(
     pageIndex: number,
     componentItem: ComponentPageItem,
+    wrapperElement: PageItem | null,
   ): void {
     this.pages.update((pages) => {
       const updatedPages = [...pages];
@@ -75,31 +76,30 @@ export class BuilderService {
         ),
       };
 
-      page.children = [...page.children, newPageItem];
+      if (wrapperElement) {
+        newPageItem.parentId = wrapperElement.id;
+        const wrapperElementChildren = this.digUntilWrapperElement(
+          page,
+          wrapperElement.id,
+        );
+        if (wrapperElementChildren) {
+          wrapperElementChildren.children.push(newPageItem);
+        }
+      }
+
+      page.children = [...page.children];
+
+      if (
+        !wrapperElement ||
+        !this.digUntilWrapperElement(page, wrapperElement.id)
+      ) {
+        page.children.push(newPageItem);
+      }
+
       updatedPages[pageIndex] = page;
       return updatedPages;
     });
     this.saveCurrentStateInStorage();
-  }
-
-  private generateChildrenWithIds(
-    children: ComponentPageItem[],
-    pageIndex: number,
-    parentId: string,
-  ): PageItem[] {
-    return children.map((child) => {
-      const childContentId = this.uniqueId;
-      return {
-        id: childContentId,
-        parentId,
-        content: child.content,
-        children: this.generateChildrenWithIds(
-          child.children || [],
-          pageIndex,
-          childContentId,
-        ),
-      };
-    });
   }
 
   updatePage(index: number, metadata: Metadata): void {
@@ -127,5 +127,45 @@ export class BuilderService {
     // TODO: show pop up if user is sure
     this.pages.set([this.defaultPage]);
     this.saveCurrentStateInStorage();
+  }
+
+  private generateChildrenWithIds(
+    children: ComponentPageItem[],
+    pageIndex: number,
+    parentId: string,
+  ): PageItem[] {
+    return children.map((child) => {
+      const childContentId = this.uniqueId;
+      return {
+        id: childContentId,
+        parentId,
+        content: child.content,
+        children: this.generateChildrenWithIds(
+          child.children || [],
+          pageIndex,
+          childContentId,
+        ),
+      };
+    });
+  }
+
+  private digUntilWrapperElement(
+    page: Page,
+    wrapperElementId: string,
+  ): PageItem | null {
+    const findWrapper = (items: PageItem[]): PageItem | null => {
+      for (const item of items) {
+        if (item.id === wrapperElementId) {
+          return item;
+        }
+        const found = findWrapper(item.children || []);
+        if (found) {
+          return found;
+        }
+      }
+      return null;
+    };
+
+    return findWrapper(page.children);
   }
 }

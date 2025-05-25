@@ -100,6 +100,7 @@ export class HomeComponent {
     this.builderService.addNewElementInPage(
       this.selectedPageIndex(),
       COMPONENTS[token.type],
+      this.selectedWrapperElement(),
     );
   }
 }

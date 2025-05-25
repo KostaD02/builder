@@ -6,6 +6,7 @@
         [rootElement]="rootElement"
         [builderPageItemRenderer]="item"
         (elementClick)="onElementClick(item)"
+        (wrapperElementClick)="selectedWrapperElement.emit($event)"
       ></ng-container>
       <ng-container
         [ngTemplateOutlet]="childrenRenderer"
@@ -22,6 +23,7 @@
         [rootElement]="rootElement"
         [builderPageItemRenderer]="child"
         (elementClick)="onElementClick(child)"
+        (wrapperElementClick)="selectedWrapperElement.emit($event)"
       ></ng-container>
       @if (child.children.length > 0) {
         <ng-container
