@@ -4,6 +4,7 @@
   --primary-color: var(--mat-sys-primary, #005cbb);
   --primary-container-color: var(--mat-sys-primary-container, #d7e3ff);
   --divider-color: #37373742;
+  --background-color: var(--mat-sys-background);
   --container-spacing: 16px;
 }
 
@@ -26,7 +27,7 @@ html {
 
 body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: var(--mat-sys-background);
+  background-color: var(--background-color);
 }
 
 button {

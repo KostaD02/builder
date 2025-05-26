@@ -90,6 +90,7 @@ mat-sidenav-container {
 
       .content-tab {
         --max-size: 115px;
+        height: 100%;
         max-height: calc(100dvh - var(--max-size));
         position: relative;
         overflow-y: auto;

@@ -1,4 +1,4 @@
-import { ComponentPageItem } from '@builder/infra/types';
+import { ComponentPageItem, ComponentEditType } from '@builder/infra/types';
 
 export const TEXT: ComponentPageItem = {
   content: {
@@ -6,6 +6,7 @@ export const TEXT: ComponentPageItem = {
     tagName: 'p',
     content: 'Example text',
     isWrapper: false,
+    editType: ComponentEditType.Text,
     style: {
       maxWidth: 'fit-content',
     },

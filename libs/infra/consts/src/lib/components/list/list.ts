@@ -1,4 +1,4 @@
-import { ComponentPageItem } from '@builder/infra/types';
+import { ComponentEditType, ComponentPageItem } from '@builder/infra/types';
 
 export const LIST: ComponentPageItem = {
   content: {
@@ -6,6 +6,7 @@ export const LIST: ComponentPageItem = {
     tagName: 'ul',
     content: '',
     isWrapper: true,
+    editType: ComponentEditType.List,
   },
   children: [
     {
@@ -13,6 +14,7 @@ export const LIST: ComponentPageItem = {
         tagName: 'li',
         content: 'List item 1',
         isWrapper: false,
+        editType: ComponentEditType.Text,
       },
     },
     {
@@ -20,6 +22,7 @@ export const LIST: ComponentPageItem = {
         tagName: 'li',
         content: 'List item 2',
         isWrapper: false,
+        editType: ComponentEditType.Text,
       },
     },
   ],

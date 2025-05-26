@@ -1,9 +1,10 @@
-import { ComponentPageItem } from '@builder/infra/types';
+import { ComponentEditType, ComponentPageItem } from '@builder/infra/types';
 
 export const TR: ComponentPageItem = {
   content: {
     tagName: 'tr',
     isWrapper: true,
+    editType: ComponentEditType.Text,
   },
 };
 
@@ -12,6 +13,7 @@ export const TH: ComponentPageItem = {
     tagName: 'th',
     content: 'Header',
     isWrapper: false,
+    editType: ComponentEditType.Text,
   },
 };
 
@@ -20,6 +22,7 @@ export const TD: ComponentPageItem = {
     tagName: 'td',
     content: 'Data',
     isWrapper: false,
+    editType: ComponentEditType.Text,
   },
 };
 
@@ -28,20 +31,15 @@ export const TABLE: ComponentPageItem = {
     class: 'table',
     tagName: 'table',
     isWrapper: true,
+    editType: ComponentEditType.Table,
   },
   children: [
     {
-      content: {
-        tagName: 'tr',
-        isWrapper: true,
-      },
+      ...TR,
       children: [TH, TH],
     },
     {
-      content: {
-        tagName: 'tr',
-        isWrapper: true,
-      },
+      ...TR,
       children: [TD, TD],
     },
   ],

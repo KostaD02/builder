@@ -9,10 +9,27 @@ export enum ComponentType {
   Table = 'table',
   Input = 'input',
   Label = 'label',
-  // Iframe = 'iframe',
+  Iframe = 'iframe',
   Container = 'container',
   // TODO: fill and implement the rest of the components
   CustomHTML = 'custom-html',
   CustomCSS = 'custom-css',
   CustomJS = 'custom-js',
+}
+
+export enum ComponentEditType {
+  Text = ComponentType.Text,
+  Image = ComponentType.Image,
+  Link = ComponentType.Link,
+  Button = ComponentType.Button,
+  Card = ComponentType.Card,
+  Form = ComponentType.Form,
+  List = ComponentType.List,
+  Table = ComponentType.Table,
+  Input = ComponentType.Input,
+  Iframe = ComponentType.Iframe,
+  Container = ComponentType.Container,
+  CustomHTML = ComponentType.CustomHTML,
+  CustomCSS = ComponentType.CustomCSS,
+  CustomJS = ComponentType.CustomJS,
 }

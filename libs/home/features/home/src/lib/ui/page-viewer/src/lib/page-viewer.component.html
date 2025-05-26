@@ -5,7 +5,7 @@
       <ng-container
         [rootElement]="rootElement"
         [builderPageItemRenderer]="item"
-        (elementClick)="onElementClick(item)"
+        (elementClick)="selectedElement.set(item)"
         (wrapperElementClick)="selectedWrapperElement.emit($event)"
       ></ng-container>
       <ng-container
@@ -22,7 +22,7 @@
       <ng-container
         [rootElement]="rootElement"
         [builderPageItemRenderer]="child"
-        (elementClick)="onElementClick(child)"
+        (elementClick)="selectedElement.set(child)"
         (wrapperElementClick)="selectedWrapperElement.emit($event)"
       ></ng-container>
       @if (child.children.length > 0) {
@@ -34,3 +34,16 @@
     }
   </ng-template>
 </section>
+
+@let editElement = selectedElement();
+@if (editElement) {
+  <div class="edit-menu" cdkDrag cdkDragBoundary=".content-tab">
+    <div class="edit-menu-header" cdkDragHandle>
+      <span>{{ editElement.content.editType | capitalize }} settings</span>
+      <button mat-icon-button (click)="selectedElement.set(null)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="edit-menu-content"></div>
+  </div>
+}
