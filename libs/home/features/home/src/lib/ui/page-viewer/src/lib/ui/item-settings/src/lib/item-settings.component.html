@@ -51,9 +51,10 @@
         </li>
       }
       <li>
-        <button mat-icon-button>
-          <mat-icon>format_color_text</mat-icon>
-        </button>
+        <builder-color-picker
+          [color]="pageItem?.content?.style?.color"
+          (selectedColor)="handleColorSelect($event)"
+        />
       </li>
     </ul>
   </div>

@@ -15,6 +15,7 @@ import {
   FontWeight,
   FormatTextOption,
   PageItem,
+  Color,
 } from '@builder/infra/types';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,6 +25,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FONT_THEMES } from '@builder/infra/consts';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { ColorPickerComponent } from '@builder/color-picker';
 
 @Component({
   selector: 'builder-item-settings',
@@ -36,6 +38,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    ColorPickerComponent,
   ],
   templateUrl: './item-settings.component.html',
   styleUrl: './item-settings.component.scss',
@@ -181,6 +184,21 @@ export class ItemSettingsComponent {
       ...fontTheme.style,
     };
 
+    this.updateContent(item);
+  }
+
+  handleColorSelect(color: Color): void {
+    const item = this.item();
+
+    if (!item) {
+      return;
+    }
+
+    if (!item.content.style) {
+      item.content.style = {};
+    }
+
+    item.content.style.color = color;
     this.updateContent(item);
   }
 

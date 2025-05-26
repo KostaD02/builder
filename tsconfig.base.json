@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@builder/color-picker": ["libs/infra/ui/color-picker/src/index.ts"],
       "@builder/component-picker": [
         "libs/home/features/home/src/lib/ui/component-picker/src/index.ts"
       ],
