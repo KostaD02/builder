@@ -99,7 +99,7 @@ export class HomeComponent {
   onNewElementAddition(token: ComponentToken): void {
     this.builderService.addNewElementInPage(
       this.selectedPageIndex(),
-      COMPONENTS[token.type],
+      JSON.parse(JSON.stringify(COMPONENTS[token.type])),
       this.selectedWrapperElement(),
     );
   }

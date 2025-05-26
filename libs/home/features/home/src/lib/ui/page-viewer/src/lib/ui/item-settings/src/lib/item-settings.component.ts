@@ -11,7 +11,6 @@ import { COMPONENTS, STYLES } from '@builder/infra/consts';
 import { BuilderService } from '@builder/infra/services';
 import {
   ComponentEditType,
-  ComponentType,
   FormatTextOption,
   PageItem,
 } from '@builder/infra/types';
@@ -71,13 +70,16 @@ export class ItemSettingsComponent {
       return;
     }
 
-    const component = COMPONENTS[item.content.tagName as ComponentType];
+    const component = JSON.parse(
+      JSON.stringify(COMPONENTS[item.content.editType]),
+    );
 
-    if (!component) {
+    if (!component || !component.content) {
       return;
     }
 
     item.content = component.content;
+    this.updateContent(item);
   }
 
   handleFormatText(option: FormatTextOption): void {
@@ -97,10 +99,14 @@ export class ItemSettingsComponent {
         item.content.style.fontWeight = '700';
         break;
       case FormatTextOption.Italic:
-        item.content.style.fontStyle = 'italic';
+        item.content.style.fontStyle =
+          item.content?.style?.fontStyle === 'italic' ? 'normal' : 'italic';
         break;
       case FormatTextOption.Underline:
-        item.content.style.textDecoration = 'underline';
+        item.content.style.textDecoration =
+          item.content?.style?.textDecoration === 'underline'
+            ? 'none'
+            : 'underline';
         break;
       case FormatTextOption.Color:
         // TODO: add color picker
@@ -114,7 +120,7 @@ export class ItemSettingsComponent {
     this.updated.emit();
     this.builderService.updateStyle(
       this.pageIndex() || 0,
-      this.item()?.id || '',
+      item.id,
       item.content,
     );
   }

@@ -6,7 +6,7 @@ export const LABEL: ComponentPageItem = {
     tagName: 'label',
     content: 'Label',
     isWrapper: false,
-    editType: ComponentEditType.Text,
+    editType: ComponentEditType.Label,
   },
 };
 

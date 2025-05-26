@@ -79,6 +79,7 @@ export class PageItemRendererDirective implements OnInit, OnDestroy {
     item: PageItem,
     applyListeners = true,
   ): void {
+    element.style.cssText = '';
     const {
       isWrapper,
       content,
