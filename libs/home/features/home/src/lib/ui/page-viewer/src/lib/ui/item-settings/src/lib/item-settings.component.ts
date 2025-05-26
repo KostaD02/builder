@@ -12,7 +12,6 @@ import { COMPONENTS, STYLES } from '@builder/infra/consts';
 import { BuilderService } from '@builder/infra/services';
 import {
   ComponentEditType,
-  ComponentGeneralStyle,
   FontWeight,
   FormatTextOption,
   PageItem,
@@ -24,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FONT_THEMES } from '@builder/infra/consts';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'builder-item-settings',
@@ -35,6 +35,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatInputModule,
   ],
   templateUrl: './item-settings.component.html',
   styleUrl: './item-settings.component.scss',
@@ -91,20 +92,7 @@ export class ItemSettingsComponent {
         return;
       }
 
-      const fontTheme = this.fontThemes.find((theme) => {
-        if (!item.content.style) {
-          return false;
-        }
-
-        return (
-          theme.style.fontSize === item.content.style.fontSize &&
-          theme.style.fontWeight === item.content.style.fontWeight
-        );
-      });
-
-      this.fontThemeForm.patchValue({
-        fontTheme: fontTheme?.token || '',
-      });
+      this.updateFontThemeForm(item);
     });
   }
 
@@ -198,10 +186,28 @@ export class ItemSettingsComponent {
 
   private updateContent(item: PageItem): void {
     this.updated.emit();
+    this.updateFontThemeForm(item);
     this.builderService.updateStyle(
       this.pageIndex() || 0,
       item.id,
       item.content,
     );
+  }
+
+  private updateFontThemeForm(item: PageItem): void {
+    const fontTheme = this.fontThemes.find((theme) => {
+      if (!item.content.style) {
+        return false;
+      }
+
+      return (
+        theme.style.fontSize === item.content.style.fontSize &&
+        theme.style.fontWeight === item.content.style.fontWeight
+      );
+    });
+
+    this.fontThemeForm.patchValue({
+      fontTheme: fontTheme?.token || '',
+    });
   }
 }
