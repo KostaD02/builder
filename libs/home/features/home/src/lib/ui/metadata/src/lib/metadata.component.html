@@ -1,6 +1,6 @@
 <form [formGroup]="metadata">
   @for (item of formItems; track $index) {
-    <mat-form-field appearance="outline">
+    <mat-form-field>
       @let formControl = item[1];
       @let title = item[0] | capitalize;
       <mat-label>{{ title }}</mat-label>

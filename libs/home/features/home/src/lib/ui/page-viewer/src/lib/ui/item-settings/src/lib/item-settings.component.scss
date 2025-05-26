@@ -1,4 +1,4 @@
-.reset {
+.actions {
   padding: var(--container-spacing);
   display: flex;
   justify-content: flex-end;
@@ -7,6 +7,10 @@
 .edit-menu-content-item {
   padding: var(--container-spacing);
   border-bottom: 1px solid var(--divider-color);
+
+  &.pb-0 {
+    padding-bottom: 0;
+  }
 
   ul {
     display: flex;

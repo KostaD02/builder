@@ -1,4 +1,3 @@
-
 export type Color = `#${string}` | 'inhert' | 'transparent';
 
 export type Position = 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';

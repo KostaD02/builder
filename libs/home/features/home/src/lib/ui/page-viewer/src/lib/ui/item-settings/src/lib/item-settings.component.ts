@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
   output,
@@ -11,20 +12,36 @@ import { COMPONENTS, STYLES } from '@builder/infra/consts';
 import { BuilderService } from '@builder/infra/services';
 import {
   ComponentEditType,
+  ComponentGeneralStyle,
+  FontWeight,
   FormatTextOption,
   PageItem,
 } from '@builder/infra/types';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { FONT_THEMES } from '@builder/infra/consts';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'builder-item-settings',
-  imports: [CommonModule, MatButtonModule, MatIconModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatSelectModule,
+  ],
   templateUrl: './item-settings.component.html',
   styleUrl: './item-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemSettingsComponent {
+  private readonly fb = inject(FormBuilder);
   private readonly builderService = inject(BuilderService);
 
   readonly componentEditType = ComponentEditType;
@@ -46,10 +63,6 @@ export class ItemSettingsComponent {
     option: FormatTextOption;
   }> = [
     {
-      icon: 'format_bold',
-      option: FormatTextOption.Bold,
-    },
-    {
       icon: 'format_italic',
       option: FormatTextOption.Italic,
     },
@@ -57,11 +70,43 @@ export class ItemSettingsComponent {
       icon: 'format_underline',
       option: FormatTextOption.Underline,
     },
-    {
-      icon: 'format_color_text',
-      option: FormatTextOption.Color,
-    },
   ];
+
+  readonly boldOptions: FontWeight[] = Array.from(
+    { length: 9 },
+    (_, i) => `${(i + 1) * 100}` as FontWeight,
+  );
+
+  readonly fontThemes = FONT_THEMES;
+
+  readonly fontThemeForm = this.fb.group({
+    fontTheme: this.fb.control(''),
+  });
+
+  constructor() {
+    effect(() => {
+      const item = this.item();
+
+      if (!item) {
+        return;
+      }
+
+      const fontTheme = this.fontThemes.find((theme) => {
+        if (!item.content.style) {
+          return false;
+        }
+
+        return (
+          theme.style.fontSize === item.content.style.fontSize &&
+          theme.style.fontWeight === item.content.style.fontWeight
+        );
+      });
+
+      this.fontThemeForm.patchValue({
+        fontTheme: fontTheme?.token || '',
+      });
+    });
+  }
 
   resetToDefaultContent(): void {
     const item = this.item();
@@ -94,10 +139,6 @@ export class ItemSettingsComponent {
     }
 
     switch (option) {
-      case FormatTextOption.Bold:
-        // TODO: add bold style picker
-        item.content.style.fontWeight = '700';
-        break;
       case FormatTextOption.Italic:
         item.content.style.fontStyle =
           item.content?.style?.fontStyle === 'italic' ? 'normal' : 'italic';
@@ -108,10 +149,49 @@ export class ItemSettingsComponent {
             ? 'none'
             : 'underline';
         break;
-      case FormatTextOption.Color:
-        // TODO: add color picker
-        break;
     }
+
+    this.updateContent(item);
+  }
+
+  handleBoldSelect(option: FontWeight): void {
+    const item = this.item();
+
+    if (!item) {
+      return;
+    }
+
+    if (!item.content.style) {
+      item.content.style = {};
+    }
+
+    item.content.style.fontWeight = option;
+    this.updateContent(item);
+  }
+
+  handleFontThemeChange(event: MatSelectChange): void {
+    const item = this.item();
+
+    if (!item) {
+      return;
+    }
+
+    const fontTheme = this.fontThemes.find(
+      (theme) => theme.token === event.value,
+    );
+
+    if (!fontTheme) {
+      return;
+    }
+
+    if (!item.content.style) {
+      item.content.style = {};
+    }
+
+    item.content.style = {
+      ...item.content.style,
+      ...fontTheme.style,
+    };
 
     this.updateContent(item);
   }

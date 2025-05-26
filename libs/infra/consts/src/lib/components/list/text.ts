@@ -9,6 +9,8 @@ export const TEXT: ComponentPageItem = {
     editType: ComponentEditType.Text,
     style: {
       maxWidth: 'fit-content',
+      fontSize: '16px',
+      fontWeight: '400',
     },
   },
 };
