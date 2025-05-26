@@ -14,6 +14,7 @@ import { Page, PageItem } from '@builder/infra/types';
 import { PageItemRendererDirective } from './page-item-renderer.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ItemSettingsComponent } from '@builder/item-settings';
 
 @Component({
   selector: 'builder-page-viewer',
@@ -25,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
     CdkDrag,
     CdkDragHandle,
     PageItemRendererDirective,
+    ItemSettingsComponent,
   ],
   templateUrl: './page-viewer.component.html',
   styleUrl: './page-viewer.component.scss',
@@ -36,6 +38,7 @@ export class PageViewerComponent {
 
   readonly selectedWrapperElement = output<PageItem>();
   readonly selectedElement = signal<PageItem | null>(null);
+  readonly forceRerender = signal<number>(0);
 
   constructor() {
     effect(() => {
@@ -44,5 +47,9 @@ export class PageViewerComponent {
         this.selectedElement.set(null);
       }
     });
+  }
+
+  forceRerenderSelectedElement(): void {
+    this.forceRerender.update((value) => ++value);
   }
 }

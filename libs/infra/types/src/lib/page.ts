@@ -18,10 +18,10 @@ export interface PageContent {
   tagName: string;
   isWrapper: boolean;
   editType: ComponentEditType;
-  content?: string;
   class?: string;
-  attributes?: Record<string, string>;
   style?: ComponentGeneralStyle;
+  content?: string;
+  attributes?: Record<string, string>;
   javascript?: string;
 }
 

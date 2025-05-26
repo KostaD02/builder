@@ -1,0 +1,28 @@
+@let pageItem = item();
+@if (pageItem) {
+  @let controls = settings();
+  @for (item of controls; track $index) {
+    @if (item === componentEditType.Text) {
+      <ng-container *ngTemplateOutlet="templateTextSettings"></ng-container>
+    }
+  } @empty {
+    <div>No controls</div>
+  }
+  <div class="reset">
+    <button mat-button (click)="resetToDefaultContent()">Reset</button>
+  </div>
+}
+
+<ng-template #templateTextSettings>
+  <div class="edit-menu-content-item">
+    <ul>
+      @for (item of formatTextOptions; track $index) {
+        <li>
+          <button mat-icon-button (click)="handleFormatText(item.option)">
+            <mat-icon>{{ item.icon }}</mat-icon>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+</ng-template>

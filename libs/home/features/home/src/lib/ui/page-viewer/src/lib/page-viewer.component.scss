@@ -16,7 +16,6 @@
 .edit-menu {
   width: 100%;
   max-width: 260px;
-  min-height: 250px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -52,6 +51,5 @@
 
   .edit-menu-content {
     flex-grow: 1;
-    padding: var(--container-spacing);
   }
 }

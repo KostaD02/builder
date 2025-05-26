@@ -30,6 +30,9 @@
       "@builder/infra/pipes": ["libs/infra/pipes/src/index.ts"],
       "@builder/infra/services": ["libs/infra/services/src/index.ts"],
       "@builder/infra/types": ["libs/infra/types/src/index.ts"],
+      "@builder/item-settings": [
+        "libs/home/features/home/src/lib/ui/page-viewer/src/lib/ui/item-settings/src/index.ts"
+      ],
       "@builder/metadata": [
         "libs/home/features/home/src/lib/ui/metadata/src/index.ts"
       ],

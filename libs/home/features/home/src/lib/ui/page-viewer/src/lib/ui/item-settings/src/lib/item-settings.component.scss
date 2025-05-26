@@ -1,0 +1,19 @@
+.reset {
+  padding: var(--container-spacing);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-menu-content-item {
+  padding: var(--container-spacing);
+  border-bottom: 1px solid var(--divider-color);
+
+  ul {
+    display: flex;
+    justify-content: center;
+    gap: var(--container-spacing);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}

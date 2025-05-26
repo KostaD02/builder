@@ -7,6 +7,7 @@ import {
   output,
   ViewContainerRef,
   OnDestroy,
+  effect,
 } from '@angular/core';
 import { PageItem } from '@builder/infra/types';
 
@@ -20,8 +21,19 @@ export class PageItemRendererDirective implements OnInit, OnDestroy {
 
   readonly builderPageItemRenderer = input<PageItem>();
   readonly rootElement = input<HTMLElement>();
+  readonly rerender = input<number>();
   readonly elementClick = output<void>();
   readonly wrapperElementClick = output<PageItem>();
+
+  constructor() {
+    effect(() => {
+      const rerenderCount = this.rerender() || 0;
+      const item = this.builderPageItemRenderer();
+      if (item && rerenderCount > 0) {
+        this.forceRerender(item);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.renderItem();
@@ -46,7 +58,8 @@ export class PageItemRendererDirective implements OnInit, OnDestroy {
       return;
     }
     const isRootLevelItem = !isNaN(Number(item.parentId));
-    const element = this.getRenderedItem(item);
+    const element = document.createElement(item.content.tagName);
+    this.applyContentToElement(element, item, true);
 
     if (!isRootLevelItem) {
       const parentNode = rootElement?.querySelector(
@@ -61,8 +74,11 @@ export class PageItemRendererDirective implements OnInit, OnDestroy {
     this.renderer.appendChild(rootElement, element);
   }
 
-  private getRenderedItem(item: PageItem): HTMLElement {
-    const element = document.createElement(item.content.tagName);
+  private applyContentToElement(
+    element: HTMLElement,
+    item: PageItem,
+    applyListeners = true,
+  ): void {
     const {
       isWrapper,
       content,
@@ -99,15 +115,15 @@ export class PageItemRendererDirective implements OnInit, OnDestroy {
 
     // TODO: handle javascript part
 
-    element.addEventListener('click', (event: MouseEvent) => {
-      event.stopPropagation();
-      this.elementClick.emit();
-      if (isWrapper) {
-        this.selectWrapperElement(element);
-      }
-    });
-
-    return element;
+    if (applyListeners) {
+      element.addEventListener('click', (event: MouseEvent) => {
+        event.stopPropagation();
+        this.elementClick.emit();
+        if (isWrapper) {
+          this.selectWrapperElement(element);
+        }
+      });
+    }
   }
 
   private selectWrapperElement(element: HTMLElement): void {
@@ -120,6 +136,16 @@ export class PageItemRendererDirective implements OnInit, OnDestroy {
     this.renderer.addClass(element, 'selected');
     if (item) {
       this.wrapperElementClick.emit(item);
+    }
+  }
+
+  private forceRerender(item: PageItem): void {
+    const rootElement = this.rootElement();
+    const element = rootElement?.querySelector(
+      `[data-id="${item.id}"]`,
+    ) as HTMLElement;
+    if (element) {
+      this.applyContentToElement(element, item, false);
     }
   }
 }

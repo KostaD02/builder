@@ -5,6 +5,7 @@ import {
   Page,
   PageItem,
   Pages,
+  PageContent,
 } from '@builder/infra/types';
 import { STORAGE_KEYS } from '@builder/infra/consts';
 import { LocalStorageService } from '../storage/storage.service';
@@ -129,6 +130,29 @@ export class BuilderService {
     this.saveCurrentStateInStorage();
   }
 
+  updateStyle(
+    pageIndex: number,
+    itemId: string,
+    content: Partial<PageContent>,
+  ): void {
+    this.pages.update((pages) => {
+      const page = pages[pageIndex];
+      const itemToUpdate = this.digUntilItem(itemId, page.children);
+
+      if (!itemToUpdate || !itemToUpdate.content) {
+        return pages;
+      }
+
+      itemToUpdate.content = {
+        ...itemToUpdate.content,
+        ...content,
+      };
+
+      return pages;
+    });
+    this.saveCurrentStateInStorage();
+  }
+
   private generateChildrenWithIds(
     children: ComponentPageItem[],
     pageIndex: number,
@@ -167,5 +191,18 @@ export class BuilderService {
     };
 
     return findWrapper(page.children);
+  }
+
+  private digUntilItem(id: string, items: PageItem[]): PageItem | null {
+    for (const item of items) {
+      if (item.id === id) {
+        return item;
+      }
+      const found = this.digUntilItem(id, item.children || []);
+      if (found) {
+        return found;
+      }
+    }
+    return null;
   }
 }
