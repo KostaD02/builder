@@ -71,6 +71,11 @@ button {
   flex-direction: column;
   background-color: var(--background-color);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+
+  &:active {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  }
 
   .settings-menu-header {
     position: relative;

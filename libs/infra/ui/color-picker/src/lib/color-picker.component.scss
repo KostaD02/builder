@@ -4,6 +4,10 @@
 
   .settings-menu-content {
     .settings-menu-content-item {
+      &:last-child {
+        border-bottom: none;
+      }
+
       ul,
       li {
         display: flex;

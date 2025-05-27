@@ -25,7 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { ColorPickerComponent } from '@builder/color-picker';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounceTime, filter, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'builder-text-settings',
@@ -102,7 +102,7 @@ export class TextSettingsComponent {
     this.fontSizeForm.controls.fontSize.valueChanges
       .pipe(
         takeUntilDestroyed(),
-        debounceTime(500),
+        distinctUntilChanged(),
         filter((value): value is number => value !== null),
         tap((value) => {
           this.handleFontSizeChange(value);
