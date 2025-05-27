@@ -42,6 +42,10 @@ export const COMPONENTS_TOKENS: ComponentToken[] = [
     type: ComponentType.List,
   },
   {
+    name: 'List item',
+    type: ComponentType.ListItem,
+  },
+  {
     name: 'Table',
     type: ComponentType.Table,
   },

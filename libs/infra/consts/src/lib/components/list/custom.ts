@@ -1,10 +1,11 @@
-import { ComponentPageItem } from '@builder/infra/types';
+import { ComponentPageItem, ComponentEditType } from '@builder/infra/types';
 
 export const CUSTOM_HTML: ComponentPageItem = {
   content: {
     class: 'custom-html',
     tagName: 'div',
     isWrapper: false,
+    editType: ComponentEditType.CustomHTML,
   },
 };
 
@@ -13,6 +14,7 @@ export const CUSTOM_CSS: ComponentPageItem = {
     class: 'custom-css',
     tagName: 'style',
     isWrapper: false,
+    editType: ComponentEditType.CustomCSS,
   },
 };
 
@@ -21,5 +23,6 @@ export const CUSTOM_JS: ComponentPageItem = {
     class: 'custom-js',
     tagName: 'script',
     isWrapper: false,
+    editType: ComponentEditType.CustomJS,
   },
 };

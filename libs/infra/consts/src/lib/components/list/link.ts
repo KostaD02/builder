@@ -1,4 +1,4 @@
-import { ComponentPageItem } from '@builder/infra/types';
+import { ComponentEditType, ComponentPageItem } from '@builder/infra/types';
 
 export const LINK: ComponentPageItem = {
   content: {
@@ -6,6 +6,7 @@ export const LINK: ComponentPageItem = {
     tagName: 'a',
     content: 'Example link',
     isWrapper: false,
+    editType: ComponentEditType.Link,
     attributes: {
       href: 'javascript:void(0)',
       target: '_self',

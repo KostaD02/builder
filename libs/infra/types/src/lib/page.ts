@@ -1,4 +1,4 @@
-import { ComponentGeneralStyle } from './component';
+import { ComponentGeneralStyle, ComponentEditType } from './component';
 import { Metadata } from './metadata';
 
 export interface Page {
@@ -17,10 +17,11 @@ export interface PageItem {
 export interface PageContent {
   tagName: string;
   isWrapper: boolean;
-  content?: string;
+  editType: ComponentEditType;
   class?: string;
-  attributes?: Record<string, string>;
   style?: ComponentGeneralStyle;
+  content?: string;
+  attributes?: Record<string, string>;
   javascript?: string;
 }
 

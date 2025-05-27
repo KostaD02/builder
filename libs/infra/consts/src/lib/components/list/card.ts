@@ -1,10 +1,11 @@
-import { ComponentPageItem } from '@builder/infra/types';
+import { ComponentPageItem, ComponentEditType } from '@builder/infra/types';
 
 export const CARD: ComponentPageItem = {
   content: {
     class: 'card',
     tagName: 'div',
     isWrapper: true,
+    editType: ComponentEditType.Card,
   },
   children: [
     {
@@ -12,10 +13,7 @@ export const CARD: ComponentPageItem = {
         tagName: 'h3',
         content: 'Card Title',
         isWrapper: false,
-        style: {
-          color: '#f00',
-          maxWidth: 'fit-content',
-        },
+        editType: ComponentEditType.Text,
       },
     },
     {
@@ -23,10 +21,7 @@ export const CARD: ComponentPageItem = {
         tagName: 'p',
         content: 'Card content goes here.',
         isWrapper: false,
-        style: {
-          color: '#0f0',
-          maxWidth: 'fit-content',
-        },
+        editType: ComponentEditType.Text,
       },
     },
   ],

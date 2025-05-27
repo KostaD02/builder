@@ -1,0 +1,18 @@
+@let pageItem = item();
+@if (pageItem) {
+  @let controls = settings();
+  @for (item of controls; track $index) {
+    @if (item === componentEditType.Text) {
+      <builder-text-settings
+        [item]="pageItem"
+        [pageIndex]="pageIndex()"
+        (updated)="onTextSettingsUpdated()"
+      />
+    }
+  } @empty {
+    <div>No controls</div>
+  }
+  <div class="actions">
+    <button mat-button (click)="resetToDefaultContent()">Reset</button>
+  </div>
+}
