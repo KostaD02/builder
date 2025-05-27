@@ -22,10 +22,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { FONT_THEMES } from '@builder/infra/consts';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatSliderModule } from '@angular/material/slider';
+import { FONT_THEMES } from '@builder/infra/consts';
 import { ColorPickerComponent } from '@builder/color-picker';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'builder-item-settings',
@@ -38,6 +41,7 @@ import { ColorPickerComponent } from '@builder/color-picker';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatSliderModule,
     ColorPickerComponent,
   ],
   templateUrl: './item-settings.component.html',
@@ -82,9 +86,17 @@ export class ItemSettingsComponent {
   );
 
   readonly fontThemes = FONT_THEMES;
+  readonly fontSizes = {
+    min: 6,
+    max: 60,
+  };
 
   readonly fontThemeForm = this.fb.group({
     fontTheme: this.fb.control(''),
+  });
+
+  readonly fontSizeForm = this.fb.group({
+    fontSize: this.fb.control(6, [Validators.min(6), Validators.max(60)]),
   });
 
   constructor() {
@@ -96,7 +108,17 @@ export class ItemSettingsComponent {
       }
 
       this.updateFontThemeForm(item);
+      this.updateFontSizeForm(item);
     });
+
+    this.fontSizeForm
+      .get('fontSize')
+      ?.valueChanges.pipe(takeUntilDestroyed(), distinctUntilChanged())
+      .subscribe((value) => {
+        if (value) {
+          this.handleFontSizeChange(value);
+        }
+      });
   }
 
   resetToDefaultContent(): void {
@@ -205,6 +227,7 @@ export class ItemSettingsComponent {
   private updateContent(item: PageItem): void {
     this.updated.emit();
     this.updateFontThemeForm(item);
+    this.updateFontSizeForm(item);
     this.builderService.updateStyle(
       this.pageIndex() || 0,
       item.id,
@@ -227,5 +250,34 @@ export class ItemSettingsComponent {
     this.fontThemeForm.patchValue({
       fontTheme: fontTheme?.token || '',
     });
+  }
+
+  private updateFontSizeForm(item: PageItem): void {
+    const currentFontSize = item.content.style?.fontSize || '16px';
+    this.fontSizeForm.patchValue(
+      {
+        fontSize: parseInt(currentFontSize as string),
+      },
+      { emitEvent: false },
+    );
+  }
+
+  private handleFontSizeChange(value: number): void {
+    if (value < this.fontSizes.min || value > this.fontSizes.max) {
+      return;
+    }
+
+    const item = this.item();
+
+    if (!item) {
+      return;
+    }
+
+    if (!item.content.style) {
+      item.content.style = {};
+    }
+
+    item.content.style.fontSize = `${value}px`;
+    this.updateContent(item);
   }
 }

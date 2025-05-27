@@ -58,4 +58,21 @@
       </li>
     </ul>
   </div>
+  <form [formGroup]="fontSizeForm" class="settings-menu-content-item">
+    <p>Font size (6px - 60px)</p>
+    <div class="group font-size">
+      <mat-slider [min]="fontSizes.min" [max]="fontSizes.max" step="1" discrete>
+        <input matSliderThumb formControlName="fontSize" />
+      </mat-slider>
+      <mat-form-field class="hide-error-placeholder">
+        <input
+          matInput
+          type="number"
+          [min]="fontSizes.min"
+          [max]="fontSizes.max"
+          formControlName="fontSize"
+        />
+      </mat-form-field>
+    </div>
+  </form>
 </ng-template>

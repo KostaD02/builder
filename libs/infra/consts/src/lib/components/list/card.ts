@@ -14,10 +14,6 @@ export const CARD: ComponentPageItem = {
         content: 'Card Title',
         isWrapper: false,
         editType: ComponentEditType.Text,
-        style: {
-          color: '#f00',
-          maxWidth: 'fit-content',
-        },
       },
     },
     {
@@ -26,10 +22,6 @@ export const CARD: ComponentPageItem = {
         content: 'Card content goes here.',
         isWrapper: false,
         editType: ComponentEditType.Text,
-        style: {
-          color: '#0f0',
-          maxWidth: 'fit-content',
-        },
       },
     },
   ],
