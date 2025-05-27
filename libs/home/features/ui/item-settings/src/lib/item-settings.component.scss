@@ -1,0 +1,23 @@
+.actions {
+  padding: var(--container-spacing);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.settings-menu-content-item {
+  p {
+    margin-bottom: 8px;
+  }
+  .group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--container-spacing);
+
+    &.font-size {
+      mat-form-field {
+        max-width: 70px;
+      }
+    }
+  }
+}

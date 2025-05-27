@@ -1,0 +1,59 @@
+@let editElement = selectedElement();
+@let forceRerenderCount = forceRerender();
+
+<section #rootElement>
+  @let pageContent = page();
+  @if (pageContent && pageContent.children.length > 0) {
+    @for (item of pageContent.children; track item.id) {
+      <ng-container
+        [rootElement]="rootElement"
+        [builderPageItemRenderer]="item"
+        [rerender]="editElement?.id === item.id ? forceRerenderCount : 0"
+        (elementClick)="selectedElement.set(item)"
+        (wrapperElementClick)="selectedWrapperElement.emit($event)"
+      ></ng-container>
+      <ng-container
+        [ngTemplateOutlet]="childrenRenderer"
+        [ngTemplateOutletContext]="{ children: item.children }"
+      ></ng-container>
+    }
+  } @else {
+    <p>No page content</p>
+  }
+
+  <ng-template #childrenRenderer let-children="children">
+    @for (child of children; track child.id) {
+      <ng-container
+        [rootElement]="rootElement"
+        [builderPageItemRenderer]="child"
+        [rerender]="editElement?.id === child.id ? forceRerenderCount : 0"
+        (elementClick)="selectedElement.set(child)"
+        (wrapperElementClick)="selectedWrapperElement.emit($event)"
+      ></ng-container>
+      @if (child.children.length > 0) {
+        <ng-container
+          [ngTemplateOutlet]="childrenRenderer"
+          [ngTemplateOutletContext]="{ children: child.children }"
+        ></ng-container>
+      }
+    }
+  </ng-template>
+</section>
+
+@if (editElement) {
+  <div class="settings-menu" cdkDrag cdkDragBoundary=".content-tab">
+    <div class="settings-menu-header" cdkDragHandle>
+      <span>{{ editElement.content.editType | capitalize }} settings</span>
+      <button mat-icon-button (click)="selectedElement.set(null)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="settings-menu-content">
+      <builder-item-settings
+        [item]="editElement"
+        [pageIndex]="pageContent?.id || 0"
+        (updated)="forceRerenderSelectedElement()"
+      ></builder-item-settings>
+    </div>
+  </div>
+}
