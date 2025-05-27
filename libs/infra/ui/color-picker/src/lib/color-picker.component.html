@@ -3,21 +3,21 @@
 </button>
 
 @if (isMenuOpened()) {
-  <div class="color-picker-menu" cdkDrag cdkDragBoundary=".content-tab">
-    <div class="color-picker-menu-header" cdkDragHandle>
+  <div class="settings-menu" cdkDrag cdkDragBoundary=".content-tab">
+    <div class="settings-menu-header" cdkDragHandle>
       <span>Select color</span>
       <button mat-icon-button (click)="isMenuOpened.set(false)">
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <div class="color-picker-menu-content">
-      <div class="color-picker-menu-content-item">
+    <div class="settings-menu-content">
+      <div class="settings-menu-content-item">
         <ul>
           @for (row of colors; track $index) {
             <li>
               @for (item of row; track $index) {
                 <button
-                  class="color-picker-menu-content-item-color"
+                  class="settings-menu-content-item-color"
                   [style.background-color]="item"
                   (click)="selectedColor.emit(item); isMenuOpened.set(false)"
                 >
@@ -28,7 +28,7 @@
           }
         </ul>
       </div>
-      <div class="color-picker-menu-content-item">
+      <div class="settings-menu-content-item">
         <mat-form-field>
           <mat-label>Custom color</mat-label>
           <input

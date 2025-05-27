@@ -1,12 +1,9 @@
-.color-picker-menu {
+.settings-menu {
   max-width: 230px;
   z-index: 10;
 
-  .color-picker-menu-content {
-    .color-picker-menu-content-item {
-      padding: var(--container-spacing);
-      border-bottom: 1px solid var(--divider-color);
-
+  .settings-menu-content {
+    .settings-menu-content-item {
       ul,
       li {
         display: flex;
@@ -16,7 +13,7 @@
         padding: 0;
       }
 
-      .color-picker-menu-content-item-color {
+      .settings-menu-content-item-color {
         width: 20px;
         height: 20px;
         border-radius: 50%;

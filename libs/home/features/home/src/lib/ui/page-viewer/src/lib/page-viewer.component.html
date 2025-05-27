@@ -41,14 +41,14 @@
 </section>
 
 @if (editElement) {
-  <div class="edit-menu" cdkDrag cdkDragBoundary=".content-tab">
-    <div class="edit-menu-header" cdkDragHandle>
+  <div class="settings-menu" cdkDrag cdkDragBoundary=".content-tab">
+    <div class="settings-menu-header" cdkDragHandle>
       <span>{{ editElement.content.editType | capitalize }} settings</span>
       <button mat-icon-button (click)="selectedElement.set(null)">
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <div class="edit-menu-content">
+    <div class="settings-menu-content">
       <builder-item-settings
         [item]="editElement"
         [pageIndex]="pageContent?.id || 0"
