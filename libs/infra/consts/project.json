@@ -1,5 +1,5 @@
 {
-  "name": "infra/consts",
+  "name": "infra-consts",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/infra/consts/src",
   "prefix": "lib",

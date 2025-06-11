@@ -4,13 +4,6 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTabsModule } from '@angular/material/tabs';
 import { LayoutActions, LayoutItem } from '@builder/home/data-access';
 import { BuilderService, LayoutService } from '@builder/infra/services';
 import {
@@ -19,27 +12,36 @@ import {
   Metadata,
   PageItem,
 } from '@builder/infra/types';
-import { CommonModule } from '@angular/common';
 import { MetadataComponent } from '@builder/metadata';
 import { ComponentPickerComponent } from '@builder/component-picker';
 import { PageViewerComponent } from '@builder/page-viewer';
 import { COMPONENTS } from '@builder/infra/consts';
-import { SIDENAV_ACTIONS, CONTROL_ACTIONS } from './actions';
+import { CONTROL_ACTIONS, SIDENAV_ACTIONS } from './actions';
+import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatAnchor, MatIconButton } from '@angular/material/button';
+import { NgTemplateOutlet } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'builder-home',
   imports: [
-    CommonModule,
-    MatListModule,
-    MatIconModule,
-    MatTabsModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatTooltipModule,
-    MatToolbarModule,
     MetadataComponent,
     ComponentPickerComponent,
     PageViewerComponent,
+    MatSidenavContainer,
+    MatSidenav,
+    MatSidenavContent,
+    MatToolbar,
+    MatIconButton,
+    NgTemplateOutlet,
+    MatIcon,
+    MatTabGroup,
+    MatTab,
+    MatTooltip,
+    MatAnchor,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

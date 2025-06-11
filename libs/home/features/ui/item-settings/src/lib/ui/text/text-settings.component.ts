@@ -10,19 +10,23 @@ import {
 import { FONT_THEMES } from '@builder/infra/consts';
 import { BuilderService } from '@builder/infra/services';
 import {
+  Color,
   FontWeight,
   FormatTextOption,
   PageItem,
-  Color,
 } from '@builder/infra/types';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import {
+  MatOption,
+  MatSelect,
+  MatSelectChange,
+} from '@angular/material/select';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatSliderModule } from '@angular/material/slider';
+import { MatInput } from '@angular/material/input';
+import { MatSlider, MatSliderThumb } from '@angular/material/slider';
 import { ColorPickerComponent } from '@builder/color-picker';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, filter, tap } from 'rxjs/operators';
@@ -32,13 +36,18 @@ import { distinctUntilChanged, filter, tap } from 'rxjs/operators';
   imports: [
     ColorPickerComponent,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatSliderModule,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    MatOption,
+    MatIconButton,
+    MatIcon,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
+    MatSlider,
+    MatSliderThumb,
+    MatInput,
   ],
   templateUrl: './text-settings.component.html',
   styleUrl: './text-settings.component.scss',

@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { ShellComponent } from './shell.component';
+import { HOME_ROUTES } from '@builder/home/shell';
 
 export const SHELL_ROUTES: Route[] = [
   {
@@ -8,8 +9,7 @@ export const SHELL_ROUTES: Route[] = [
     loadChildren: () => [
       {
         path: '',
-        loadChildren: () =>
-          import('@builder/home/shell').then((m) => m.HOME_ROUTES),
+        children: HOME_ROUTES,
       },
       {
         path: '**',

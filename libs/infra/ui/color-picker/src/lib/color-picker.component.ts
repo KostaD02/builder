@@ -1,5 +1,4 @@
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,20 +7,22 @@ import {
   signal,
 } from '@angular/core';
 import { Color } from '@builder/infra/types';
-import { MatButtonModule } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { COLORS } from '@builder/infra/consts';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 @Component({
   selector: 'builder-color-picker',
   imports: [
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
     CdkDrag,
     CdkDragHandle,
+    MatIconButton,
+    MatIcon,
+    MatFormField,
+    MatLabel,
+    MatInput,
   ],
   templateUrl: './color-picker.component.html',
   styleUrl: './color-picker.component.scss',

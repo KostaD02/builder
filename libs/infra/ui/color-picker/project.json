@@ -1,5 +1,5 @@
 {
-  "name": "color-picker",
+  "name": "infra-ui-color-picker",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/infra/ui/color-picker/src",
   "prefix": "builder",

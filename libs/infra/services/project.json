@@ -1,5 +1,5 @@
 {
-  "name": "infra/services",
+  "name": "infra-services",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/infra/services/src",
   "prefix": "lib",

@@ -8,25 +8,25 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { Page, PageItem } from '@builder/infra/types';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { ItemSettingsComponent } from '@builder/item-settings';
 import { PageItemRendererDirective } from './page-item-renderer.directive';
 
 @Component({
   selector: 'builder-page-viewer',
   imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
     CapitalizePipe,
     CdkDrag,
     CdkDragHandle,
     PageItemRendererDirective,
     ItemSettingsComponent,
+    NgTemplateOutlet,
+    MatIconButton,
+    MatIcon,
   ],
   templateUrl: './page-viewer.component.html',
   styleUrl: './page-viewer.component.scss',

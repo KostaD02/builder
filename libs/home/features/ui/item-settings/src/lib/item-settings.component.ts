@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,12 +9,12 @@ import {
 import { COMPONENTS, STYLES } from '@builder/infra/consts';
 import { BuilderService } from '@builder/infra/services';
 import { ComponentEditType, PageItem } from '@builder/infra/types';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { TextSettingsComponent } from './ui';
 
 @Component({
   selector: 'builder-item-settings',
-  imports: [CommonModule, MatButtonModule, TextSettingsComponent],
+  imports: [TextSettingsComponent, MatButton],
   templateUrl: './item-settings.component.html',
   styleUrl: './item-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,21 +7,23 @@ import {
   output,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CapitalizePipe } from '@builder/infra/pipes';
 import { Metadata } from '@builder/infra/types';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 
 @Component({
   selector: 'builder-metadata',
   imports: [
     ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
     CapitalizePipe,
+    MatFormField,
+    MatInput,
+    MatButton,
+    MatLabel,
+    MatError
   ],
   templateUrl: './metadata.component.html',
   styleUrl: './metadata.component.scss',
