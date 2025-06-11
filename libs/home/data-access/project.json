@@ -1,5 +1,5 @@
 {
-  "name": "home/data-access",
+  "name": "home-data-access",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/home/data-access/src",
   "prefix": "lib",

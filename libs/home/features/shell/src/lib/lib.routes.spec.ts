@@ -1,4 +1,3 @@
-
 import { Route } from '@angular/router';
 import { HOME_ROUTES } from './lib.routes';
 

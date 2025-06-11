@@ -1,4 +1,4 @@
-import { ComponentPageItem } from '@builder/infra/types';
+import { ComponentPageItem, ComponentEditType } from '@builder/infra/types';
 
 export const LABEL: ComponentPageItem = {
   content: {
@@ -6,6 +6,7 @@ export const LABEL: ComponentPageItem = {
     tagName: 'label',
     content: 'Label',
     isWrapper: false,
+    editType: ComponentEditType.Label,
   },
 };
 
@@ -14,6 +15,7 @@ export const INPUT: ComponentPageItem = {
     class: 'input',
     tagName: 'input',
     isWrapper: false,
+    editType: ComponentEditType.Input,
     attributes: {
       type: 'text',
       placeholder: 'Enter your text',
@@ -26,6 +28,7 @@ export const FORM: ComponentPageItem = {
     class: 'form',
     tagName: 'form',
     isWrapper: true,
+    editType: ComponentEditType.Form,
     attributes: {
       action: 'javascript:void(0)',
     },
@@ -36,6 +39,7 @@ export const FORM: ComponentPageItem = {
         class: 'form-group',
         tagName: 'div',
         isWrapper: true,
+        editType: ComponentEditType.Container,
       },
       children: [LABEL, INPUT],
     },

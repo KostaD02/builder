@@ -5,12 +5,11 @@ import { IMAGE } from './image';
 import { LINK } from './link';
 import { CARD } from './card';
 import { FORM, INPUT, LABEL } from './form';
-import { LIST } from './list';
+import { LIST, LIST_ITEM } from './list';
 import { TABLE } from './table';
+import { IFRAME } from './iframe';
 import { CONTAINER } from './container';
-import { CUSTOM_HTML } from './custom';
-import { CUSTOM_CSS } from './custom';
-import { CUSTOM_JS } from './custom';
+import { CUSTOM_CSS, CUSTOM_HTML, CUSTOM_JS } from './custom';
 
 export const COMPONENTS: Record<ComponentType, ComponentPageItem> = {
   [ComponentType.Button]: BUTTON,
@@ -22,8 +21,10 @@ export const COMPONENTS: Record<ComponentType, ComponentPageItem> = {
   [ComponentType.Input]: INPUT,
   [ComponentType.Label]: LABEL,
   [ComponentType.List]: LIST,
+  [ComponentType.ListItem]: LIST_ITEM,
   [ComponentType.Table]: TABLE,
   [ComponentType.Container]: CONTAINER,
+  [ComponentType.Iframe]: IFRAME,
   [ComponentType.CustomHTML]: CUSTOM_HTML,
   [ComponentType.CustomCSS]: CUSTOM_CSS,
   [ComponentType.CustomJS]: CUSTOM_JS,

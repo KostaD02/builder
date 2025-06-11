@@ -1,5 +1,5 @@
 {
-  "name": "infra/types",
+  "name": "infra-types",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/infra/types/src",
   "prefix": "lib",

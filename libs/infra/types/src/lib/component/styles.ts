@@ -1,4 +1,3 @@
-
 export type Color = `#${string}` | 'inhert' | 'transparent';
 
 export type Position = 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
@@ -21,7 +20,7 @@ export type TextTransform = 'none' | 'capitalize' | 'uppercase' | 'lowercase';
 export type TextDecoration = 'none' | 'underline' | 'line-through' | 'overline';
 
 export type BorderStyle = 'none' | 'solid' | 'dotted' | 'dashed' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset';
-export type Border = `${Size} ${BorderStyle} ${Color}`;
+export type Border = `${Size} ${BorderStyle} ${Color}` | 'none';
 export type BorderRadius = `${Size}` | `${Size} ${Size}` | `${Size} ${Size} ${Size}` | `${Size} ${Size} ${Size} ${Size}`;
 
 export type AlignmentJustify = 'start' | 'end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
